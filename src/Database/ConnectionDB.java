@@ -94,29 +94,4 @@ public class ConnectionDB {
         }
     }
 
-    public List<User> getUsers(){
-        List<User> users = new ArrayList<>();
-        String sql = "SELECT user_ID, name, surname, user_type, email, password FROM User";
-        try (
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                User user = new User();
-                //user.setUserId(rs.getInt("user_ID"));
-                user.setName(rs.getString("name"));
-                user.setSurname(rs.getString("surname"));
-                user.setUserType(rs.getString("user_type"));
-                user.setEmail(rs.getString("email"));
-                user.setPassword(rs.getString("password")); // Ensure careful handling of passwords
-                users.add(user);
-            }
-        } catch (Exception e) {
-            e.printStackTrace(); // For debugging, consider a logging framework for production
-        }
-        return users;
-    }
-
-
 }

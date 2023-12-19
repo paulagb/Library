@@ -4,8 +4,6 @@ package Database.DAO;
 import Database.ConnectionDB;
 import Model.User;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,25 +20,31 @@ import java.util.List;
 public class UserDAO {
     ConnectionDB conn;
 
-    public UserDAO(){
+    public UserDAO() {
         conn = ConnectionDB.getInstance();
     }
 
-    public boolean getUsers(){
+    public List<User> getUsers() {
         List<User> users = new ArrayList<>();
         String sql = "SELECT user_ID, name, surname, user_type, email, password FROM User";
 
-        ResultSet result = conn.selectQuery(sql);
-        boolean success = false;
-        try{
-            while(result.next()){
-                success = true;
+        ResultSet rs = conn.selectQuery(sql);
+
+        try {
+            while (rs.next()) {
+                User user = new User();
+                //user.setUserId(rs.getInt("user_ID"));
+                user.setName(rs.getString("name"));
+                user.setSurname(rs.getString("surname"));
+                user.setUserType(rs.getString("user_type"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password")); // Ensure careful handling of passwords
+                users.add(user);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+
+        } catch (SQLException throwables) {
+            throwables.getSQLState();
         }
-
-        return success;
+        return users;
     }
-
 }
