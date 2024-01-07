@@ -47,4 +47,32 @@ public class UserDAO {
         }
         return users;
     }
+
+    public User checkCredentials(String username, String password) {
+        String sql = "SELECT email, password FROM User WHERE email = '" + username + "' AND password = '" + password + "'";
+        ResultSet rs = conn.selectQuery(sql);
+        try {
+            if (rs.next()) {
+                User user = new User();
+                //user.setUserId(rs.getInt("user_ID"));
+                user.setName(rs.getString("name"));
+                user.setSurname(rs.getString("surname"));
+                user.setUserType(rs.getString("user_type"));
+                user.setEmail(rs.getString("email"));
+                user.setPassword(rs.getString("password")); // Ensure careful handling of passwords
+
+                System.out.println("User exists");
+                return user;
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean createProfile(String name, String surname, String user_type, String email, String password) {
+        String sql = "INSERT INTO User (name, surname, user_type, email, password) VALUES ('" + name + "',' " + surname + "', " + "' " + user_type + "', '" + email + "', '" + password + "')";
+
+        return conn.insertQuery(sql);
+    }
 }

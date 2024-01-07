@@ -1,28 +1,11 @@
-package ui;
+package UI;
 
-import service.Library;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
-import java.awt.Color;
+import javax.imageio.plugins.tiff.BaselineTIFFTagSet;
+import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
-
-
-import java.awt.Rectangle;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.ImageIcon;
-import javax.swing.JSeparator;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
+import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 
@@ -33,14 +16,18 @@ public class Login extends JFrame {
     private JPanel contentPane;
     private JTextField tfEmail;
     private JPasswordField pfPassword;
-    private Library library;
+    private JButton btLogin;
+    private JButton btCreateProfile; //TODO ADD BUTTON TO THE VIEW
 
 
     /**
      * Create the frame.
      */
     public Login() {
-        library = new Library();
+        configureView();
+    }
+
+    public void configureView() {
         setTitle("Library: Log in");
         setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/icono.jpg")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,12 +58,9 @@ public class Login extends JFrame {
         separator.setBounds(64, 67, 270, 2);
         pnLogin.add(separator);
 
-        JButton btLogin = new JButton("Log in");
-        btLogin.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                checkCredentials();
-            }
-        });
+        btLogin = new JButton("Log in");
+        btLogin.setName("btLogin");
+        btLogin.setActionCommand("btLogin");
         btLogin.setForeground(new Color(255, 255, 255));
         btLogin.setBackground(new Color(218, 165, 32));
         btLogin.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 17));
@@ -105,19 +89,33 @@ public class Login extends JFrame {
         pfPassword.setBackground(new Color(230, 230, 250));
         pfPassword.setBounds(64, 217, 270, 28);
         pnLogin.add(pfPassword);
+
+        //TODO ADD BUTTON TO THE VIEW
+        btCreateProfile = new JButton("Create Profile");
+        btCreateProfile.setActionCommand("register");
+
     }
 
-    @SuppressWarnings("deprecation")
-    private void checkCredentials() {
-        if(tfEmail.getText().isBlank() || pfPassword.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this, "Email or password is blank");
-        }
-        else if(library.checkCredentials(tfEmail.getText(), pfPassword.getText())) {
-            CreateProfile frame = new CreateProfile(library);
-            //frame.setModal(true);    //acordarse
-            frame.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(this, "Email or password does not exists");
-        }
+    public void showView(boolean state) {
+        setVisible(state);
+    }
+
+    public void setControllers(ActionListener actionListener) {
+        this.btLogin.addActionListener(actionListener);
+        this.btCreateProfile.addActionListener(actionListener);
+
+    }
+
+    public String getUsername() {
+        return tfEmail.getText();
+    }
+
+    public String getPassword() {
+        return new String(pfPassword.getPassword());
+    }
+
+
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
     }
 }

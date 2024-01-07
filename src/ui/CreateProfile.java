@@ -1,6 +1,8 @@
-package ui;
+package UI;
 
 
+import Controllers.CreateProfileController;
+import Controllers.LoginController;
 import service.Library;
 
 import javax.swing.JFrame;
@@ -32,14 +34,13 @@ public class CreateProfile extends JFrame {
     private JTextField tfEmail;
     private JPasswordField pfPassword;
     private JPasswordField pfRPassword;
-    private Library library;
-
+    private JButton btSubmit;
+    private JButton btLogin; //TODO ADD BUTTON TO THE VIEW
 
     /**
      * Create the frame.
      */
-    public CreateProfile(Library library) {
-        this.library = library;
+    public CreateProfile() {
         setTitle("Library: Create profile");
         setIconImage(Toolkit.getDefaultToolkit().getImage(CreateProfile.class.getResource("/img/icono.jpg")));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,33 +106,46 @@ public class CreateProfile extends JFrame {
         pfRPassword.setBounds(44, 350, 246, 30);
         panel.add(pfRPassword);
 
-        JButton btSubmit = new JButton("Submit");
-        btSubmit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                checkFields();
-            }
-
-        });
+        btSubmit = new JButton("Submit");
+        btSubmit.setActionCommand("Submit");
         btSubmit.setBackground(new Color(218, 165, 32));
         btSubmit.setForeground(new Color(255, 255, 255));
         btSubmit.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 15));
         btSubmit.setBounds(479, 338, 112, 37);
         panel.add(btSubmit);
+
+        //TODO ADD BUTTON TO THE VIEW
+        btLogin = new JButton("Login");
+        btLogin.setActionCommand("Login");
     }
 
 
-    @SuppressWarnings("deprecation")
-    private void checkFields() {
-        if(tfEmail.getText().isBlank() || pfPassword.getText().isBlank() || pfRPassword.getText().isBlank()) {
-            JOptionPane.showMessageDialog(this, "Some field is blank");
-        } else if(!pfPassword.getText().equals(pfRPassword.getText())) {
-            JOptionPane.showMessageDialog(this, "Passwords do not match");
-        } else if(!library.checkIfProfileExists(tfEmail.getText())) {
-            library.createProfile(tfName.getText(), tfEmail.getText(), pfPassword.getText());
-            JOptionPane.showMessageDialog(this, "Profile created!");
-            dispose();
-        }
-
+     public void setControllers(CreateProfileController createProfileController) {
+        btSubmit.addActionListener(createProfileController);
+        btLogin.addActionListener(createProfileController);
     }
 
+    public void showView(boolean b) {
+        setVisible(b);
+    }
+
+    public String getUsername() {
+        return tfEmail.getText();
+    }
+
+    public String getPassword() {
+        return new String(pfPassword.getPassword());
+    }
+    public String getPassword1() {
+        return new String(pfPassword.getPassword());
+    }
+
+
+    public String getEmail() { return tfEmail.getText(); }
+
+
+    public void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+        dispose();
+    }
 }

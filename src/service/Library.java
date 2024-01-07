@@ -1,22 +1,53 @@
 package service;
 
+import Controllers.MasterController;
+import Database.DAO.UserDAO;
+import Model.User;
+
 public class Library {
+    private UserDAO userDAO;
+    private MasterController masterController;
+    private User user;
 
     public Library() {
-
+        userDAO = new UserDAO();
     }
 
-    public boolean checkCredentials(String user, String password) {
-        return true; //library method that check user data base
+    public void setMasterController(MasterController masterController) {
+        this.masterController = masterController;
+    }
+
+    public boolean checkCredentials(String username, String password) {
+        user = userDAO.checkCredentials(username, password);
+        return user != null;
+    }
+
+    public void changeView(String view) {
+        switch (view) {
+            case "register":
+                masterController.register();
+                break;
+            case "mainPage":
+                if (user.getUserType().equals("user")) {
+                    masterController.okLoginCustomer();
+                } else {
+                    masterController.okLoginAdmin();
+                }
+                masterController.okLoginCustomer();
+                break;
+            case "login":
+                masterController.login();
+                break;
+
+        }
     }
 
     public boolean checkIfProfileExists(String email) {
-        return false; //method that checks in data base if an account already exists
+        return false;
     }
 
-    public void createProfile(String name, String email, String password) {
-        //method that creates a new profile
+    public boolean createProfile(String username, String email, String password) {
+        return userDAO.createProfile(username, "surname", "user", email, password);
     }
-
 }
 

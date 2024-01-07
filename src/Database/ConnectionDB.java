@@ -1,10 +1,6 @@
 package Database;
 
-import Model.User;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Class to connect to the Database, and to work directly with it
@@ -27,9 +23,9 @@ public class ConnectionDB {
     public ConnectionDB() {
         port = 3306;
         ipAdress = "sql11.freesqldatabase.com";
-        db = "sql11670409";
-        userName = "sql11670409";
-        password = "9dLwndtWvE";
+        db = "sql11673817";
+        userName = "sql11673817";
+        password = "HSUv2TDPgn";
 
         String jdbcUrl = "jdbc:mysql://" + ipAdress + ":" + port + "/" + userName;
 
@@ -50,16 +46,28 @@ public class ConnectionDB {
     }
 
 
-    public ResultSet selectQuery(String query){
+    public ResultSet selectQuery(String query) {
         ResultSet rs = null;
         try {
-            s =(Statement) conn.createStatement();
-            rs = s.executeQuery (query);
+            s = conn.createStatement();
+            rs = s.executeQuery(query);
 
         } catch (SQLException ex) {
-            System.out.println("Problema al Recuperar les dades --> " + ex.getSQLState() + "\n");
+            System.out.println("select error database --> " + ex.getSQLState() + "\n");
         }
         return rs;
+    }
+
+    public boolean insertQuery(String query) {
+        int rowsInserted = 0;
+        try {
+            s = conn.createStatement();
+            rowsInserted = s.executeUpdate(query);
+
+        } catch (SQLException ex) {
+            System.out.println("Insertion error database --> " + ex.getSQLState() + "\n");
+        }
+        return rowsInserted > 0;
     }
 
     public void connect() {
@@ -77,7 +85,6 @@ public class ConnectionDB {
             System.out.println("Problema al connecta-nos a la BBDD --> " + url + "\n");
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
-            System.out.println(ex);
         }
 
     }
