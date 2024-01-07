@@ -19,12 +19,10 @@ public class MainPageCustomerController {
     }
 
     public void displayView(boolean b) {
-        mainCustomerView.showView(b);
-    }
-
-    public void showBooks(){
         BookDAO bookDAO = new BookDAO();
         ArrayList<Book> books = (ArrayList<Book>) bookDAO.getBooks();
-        System.out.println(books);
+        //System.out.println(books);
+        mainCustomerView.setBooks(books);
+        mainCustomerView.showView(b);
     }
 }

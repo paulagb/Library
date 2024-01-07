@@ -9,9 +9,6 @@ import java.awt.event.ActionListener;
 
 public class Login extends JFrame {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField tfEmail;
@@ -37,7 +34,6 @@ public class Login extends JFrame {
         contentPane.setForeground(new Color(255, 255, 255));
         contentPane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 
-
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
@@ -60,7 +56,7 @@ public class Login extends JFrame {
 
         btLogin = new JButton("Log in");
         btLogin.setName("btLogin");
-        btLogin.setActionCommand("btLogin");
+        btLogin.setActionCommand("btLogin"); //ACTION LISTENER PARA GESTIONARLO EN EL CONTROLLER
         btLogin.setForeground(new Color(255, 255, 255));
         btLogin.setBackground(new Color(218, 165, 32));
         btLogin.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 17));
@@ -103,7 +99,6 @@ public class Login extends JFrame {
     public void setControllers(ActionListener actionListener) {
         this.btLogin.addActionListener(actionListener);
         this.btCreateProfile.addActionListener(actionListener);
-
     }
 
     public String getUsername() {
@@ -113,7 +108,6 @@ public class Login extends JFrame {
     public String getPassword() {
         return new String(pfPassword.getPassword());
     }
-
 
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);
