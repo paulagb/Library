@@ -34,6 +34,10 @@ public class Main {
                 logic.setMasterController(masterController);
 
 
+                //loginView.setVisible(true);
+                mainPageCustomerController.showBooks();
+
+
             }
         });
 

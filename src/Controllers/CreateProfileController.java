@@ -14,9 +14,6 @@ public class CreateProfileController implements ActionListener {
     public CreateProfileController(CreateProfile createProfileView, Library logic) {
         this.createProfileView = createProfileView;
         this.logic = logic;
-        createProfileView.showView(
-                true);
-
     }
 
     public void displayView(boolean b) {
