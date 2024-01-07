@@ -2,6 +2,7 @@ package UI;
 
 import Controllers.LoginController;
 import Controllers.MainPageCustomerController;
+import Model.Book;
 import service.Library;
 
 import javax.swing.JFrame;
@@ -25,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.ArrayList;
 
 public class MainCustomer extends JFrame {
 
@@ -33,6 +35,7 @@ public class MainCustomer extends JFrame {
     private JTextField tfEmail;
     private JPasswordField pfPassword;
     private JButton btLogin;
+    private ArrayList<Book> books;
 
 
     /**
@@ -54,6 +57,9 @@ public class MainCustomer extends JFrame {
 
     }
 
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+    }
     public void showView(boolean state) { setVisible(state); }
 
     public void setControllers(MainPageCustomerController mainPageCustomerController){
