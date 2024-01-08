@@ -1,6 +1,6 @@
 package Controllers;
 
-import UI.CreateProfile;
+import ui.CreateProfile;
 import service.Library;
 
 import java.awt.event.ActionEvent;

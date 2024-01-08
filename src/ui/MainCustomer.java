@@ -1,12 +1,11 @@
-package UI;
+package ui;
 
 import Controllers.LoginController;
 import Controllers.MainPageCustomerController;
 import Model.Book;
 import service.Library;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.Toolkit;
 import java.awt.Color;
@@ -15,46 +14,145 @@ import javax.swing.border.EtchedBorder;
 
 
 import java.awt.Rectangle;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import javax.swing.ImageIcon;
-import javax.swing.JSeparator;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.util.ArrayList;
 
 public class MainCustomer extends JFrame {
 
     private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private JTextField tfEmail;
-    private JPasswordField pfPassword;
-    private JButton btLogin;
     private ArrayList<Book> books;
+    private JPanel contentPane;
+    private JTextField tfSearch;
+
 
 
     /**
      * Create the frame.
      */
     public MainCustomer() {
-        configureView();
-    }
-
-    public void configureView(){
-        setTitle("Library: Log in");
-        setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/img/icono.jpg")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(MainCustomer.class.getResource("/img/icono.jpg")));
+        setTitle("Library\u2122");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1005, 580);
+        setBounds(100, 100, 989, 578);
         contentPane = new JPanel();
-        contentPane.setBackground(new Color(70, 130, 180));
-        contentPane.setForeground(new Color(255, 255, 255));
-        contentPane.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
+        contentPane.setBackground(new Color(255, 255, 255));
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JPanel pnBar = new JPanel();
+        pnBar.setBackground(new Color(70, 130, 180));
+        pnBar.setBounds(0, 0, 975, 57);
+        contentPane.add(pnBar);
+        pnBar.setLayout(null);
+
+        JLabel lblLibrary = new JLabel("Library\u2122");
+        lblLibrary.setForeground(new Color(255, 255, 255));
+        lblLibrary.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
+        lblLibrary.setBounds(50, 10, 98, 24);
+        pnBar.add(lblLibrary);
+
+        tfSearch = new JTextField("Search by book or author");
+        tfSearch.setForeground(Color.GRAY);
+
+        tfSearch.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (tfSearch.getText().equals("Search by book or author")) {
+                    tfSearch.setText("");
+                    tfSearch.setForeground(Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (tfSearch.getText().trim().isEmpty()) {
+                    tfSearch.setText("Search by book or author");
+                    tfSearch.setForeground(Color.GRAY);
+                }
+            }
+
+        });
+        tfSearch.setFont(new Font("Leelawadee", Font.PLAIN, 14));
+        tfSearch.setBounds(289, 14, 209, 26);
+        pnBar.add(tfSearch);
+        tfSearch.setColumns(10);
+
+        JButton btSearch = new JButton("");
+        btSearch.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //search in books list
+            }
+        });
+        btSearch.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/magnifying-glass.png")));
+        btSearch.setForeground(new Color(255, 255, 255));
+        btSearch.setBackground(new Color(218, 165, 32));
+        btSearch.setBounds(256, 14, 33, 26);
+        pnBar.add(btSearch);
+
+        JButton btProfile = new JButton("");
+        btProfile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //show rented books
+            }
+        });
+        btProfile.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/user.png")));
+        btProfile.setBackground(new Color(70, 130, 180));
+        btProfile.setForeground(new Color(0, 0, 0));
+        btProfile.setBounds(888, -3, 66, 59);
+        pnBar.add(btProfile);
+
+        JButton btNotification = new JButton("");
+        btNotification.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //show notifications
+            }
+        });
+        btNotification.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/bell.png")));
+        btNotification.setForeground(Color.BLACK);
+        btNotification.setBackground(new Color(70, 130, 180));
+        btNotification.setBounds(826, -2, 66, 59);
+        pnBar.add(btNotification);
+
+        JButton btFavorites = new JButton("");
+        btFavorites.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //show favorites
+            }
+        });
+        btFavorites.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/heart.png")));
+        btFavorites.setForeground(Color.BLACK);
+        btFavorites.setBackground(new Color(70, 130, 180));
+        btFavorites.setBounds(768, -2, 59, 59);
+        pnBar.add(btFavorites);
+
+        JPanel pnTitle = new JPanel();
+        pnTitle.setBounds(0, 55, 975, 118);
+        contentPane.add(pnTitle);
+        pnTitle.setLayout(null);
+
+        JLabel lblExplore = new JLabel("Explore");
+        lblExplore.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 26));
+        lblExplore.setBounds(398, 35, 90, 45);
+        pnTitle.add(lblExplore);
+
+        JLabel lblImgExplore = new JLabel("");
+        lblImgExplore.setBounds(498, 10, 127, 98);
+        lblImgExplore.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/books.png")));
+        lblImgExplore.setHorizontalAlignment(JLabel.CENTER);
+        lblImgExplore.setVerticalAlignment(JLabel.CENTER);
+        pnTitle.add(lblImgExplore);
+
+        JScrollPane spBooks = new JScrollPane();
+        spBooks.setBackground(new Color(255, 255, 255));
+        spBooks.setBounds(0, 171, 975, 370);
+        contentPane.add(spBooks);
     }
 
     public void setBooks(ArrayList<Book> books) {
@@ -65,7 +163,6 @@ public class MainCustomer extends JFrame {
     public void setControllers(MainPageCustomerController mainPageCustomerController){
 
     }
-
 
     public void showMessage(String message) {
         JOptionPane.showMessageDialog(this, message);

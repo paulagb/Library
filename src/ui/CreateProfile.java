@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 
 import Controllers.CreateProfileController;
@@ -35,7 +35,7 @@ public class CreateProfile extends JFrame {
     private JPasswordField pfPassword;
     private JPasswordField pfRPassword;
     private JButton btSubmit;
-    private JButton btLogin; //TODO ADD BUTTON TO THE VIEW
+    private JButton btLoginHere;
 
     /**
      * Create the frame.
@@ -65,45 +65,45 @@ public class CreateProfile extends JFrame {
 
         JSeparator separator = new JSeparator();
         separator.setBackground(new Color(184, 134, 11));
-        separator.setBounds(79, 61, 631, 11);
+        separator.setBounds(44, 61, 707, 11);
         panel.add(separator);
 
-        JLabel lblName = new JLabel("Name");
+        JLabel lblName = new JLabel("Nickname");
         lblName.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-        lblName.setBounds(44, 99, 50, 20);
+        lblName.setBounds(44, 99, 68, 20);
         panel.add(lblName);
 
         tfName = new JTextField();
-        tfName.setBounds(44, 129, 218, 30);
+        tfName.setBounds(44, 129, 246, 30);
         panel.add(tfName);
         tfName.setColumns(10);
 
         JLabel lblEmail = new JLabel("Email*");
         lblEmail.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-        lblEmail.setBounds(44, 169, 45, 26);
+        lblEmail.setBounds(417, 96, 45, 26);
         panel.add(lblEmail);
 
         tfEmail = new JTextField();
-        tfEmail.setBounds(44, 205, 271, 30);
+        tfEmail.setBounds(417, 129, 334, 30);
         panel.add(tfEmail);
         tfEmail.setColumns(10);
 
         JLabel lblPassword = new JLabel("Password*");
         lblPassword.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-        lblPassword.setBounds(46, 245, 96, 20);
+        lblPassword.setBounds(44, 179, 96, 20);
         panel.add(lblPassword);
 
         pfPassword = new JPasswordField();
-        pfPassword.setBounds(44, 280, 246, 30);
+        pfPassword.setBounds(44, 209, 246, 30);
         panel.add(pfPassword);
 
         JLabel lblRepeat = new JLabel("Repeat Password*");
         lblRepeat.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 16));
-        lblRepeat.setBounds(44, 320, 133, 20);
+        lblRepeat.setBounds(417, 179, 133, 20);
         panel.add(lblRepeat);
 
         pfRPassword = new JPasswordField();
-        pfRPassword.setBounds(44, 350, 246, 30);
+        pfRPassword.setBounds(417, 209, 246, 30);
         panel.add(pfRPassword);
 
         btSubmit = new JButton("Submit");
@@ -111,18 +111,29 @@ public class CreateProfile extends JFrame {
         btSubmit.setBackground(new Color(218, 165, 32));
         btSubmit.setForeground(new Color(255, 255, 255));
         btSubmit.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 15));
-        btSubmit.setBounds(479, 338, 112, 37);
+        btSubmit.setBounds(304, 286, 133, 55);
         panel.add(btSubmit);
 
-        //TODO ADD BUTTON TO THE VIEW
-        btLogin = new JButton("Login");
-        btLogin.setActionCommand("Login");
+        JLabel lblLogin = new JLabel("Already have an account?");
+        lblLogin.setForeground(new Color(0, 0, 0));
+        lblLogin.setFont(new Font("Leelawadee UI", Font.PLAIN, 14));
+        lblLogin.setBounds(523, 337, 178, 20);
+        panel.add(lblLogin);
+
+        btLoginHere = new JButton("Log in here");
+        btLoginHere.setActionCommand("Login");
+        btLoginHere.setForeground(new Color(255, 255, 255));
+        btLoginHere.setBackground(new Color(0, 204, 0));
+        btLoginHere.setFont(new Font("Leelawadee UI", Font.BOLD, 13));
+        btLoginHere.setBounds(542, 367, 119, 40);
+        panel.add(btLoginHere);
+
     }
 
 
-     public void setControllers(CreateProfileController createProfileController) {
+    public void setControllers(CreateProfileController createProfileController) {
         btSubmit.addActionListener(createProfileController);
-        btLogin.addActionListener(createProfileController);
+        btLoginHere.addActionListener(createProfileController);
     }
 
     public void showView(boolean b) {

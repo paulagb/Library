@@ -1,4 +1,4 @@
-package UI;
+package ui;
 
 import javax.imageio.plugins.tiff.BaselineTIFFTagSet;
 import javax.swing.*;
@@ -14,7 +14,7 @@ public class Login extends JFrame {
     private JTextField tfEmail;
     private JPasswordField pfPassword;
     private JButton btLogin;
-    private JButton btCreateProfile; //TODO ADD BUTTON TO THE VIEW
+    private JButton btRegister;
 
 
     /**
@@ -40,7 +40,7 @@ public class Login extends JFrame {
         JPanel pnLogin = new JPanel();
         pnLogin.setBackground(new Color(255, 255, 255));
         pnLogin.setBorder(new CompoundBorder());
-        pnLogin.setBounds(269, 106, 415, 338);
+        pnLogin.setBounds(269, 36, 415, 452);
         contentPane.add(pnLogin);
         pnLogin.setLayout(null);
 
@@ -86,9 +86,19 @@ public class Login extends JFrame {
         pfPassword.setBounds(64, 217, 270, 28);
         pnLogin.add(pfPassword);
 
-        //TODO ADD BUTTON TO THE VIEW
-        btCreateProfile = new JButton("Create Profile");
-        btCreateProfile.setActionCommand("register");
+        JLabel lblRegister = new JLabel("Don't have an account?");
+        lblRegister.setFont(new Font("Leelawadee UI", Font.PLAIN, 12));
+        lblRegister.setBounds(64, 380, 130, 23);
+        pnLogin.add(lblRegister);
+
+        btRegister = new JButton("Register here");
+        btRegister.setActionCommand("register");
+        btRegister.setForeground(new Color(255, 255, 255));
+        btRegister.setBackground(new Color(0, 204, 0));
+        btRegister.setFont(new Font("Leelawadee UI", Font.BOLD, 14));
+        btRegister.setBounds(204, 373, 130, 35);
+        pnLogin.add(btRegister);
+
 
     }
 
@@ -98,7 +108,7 @@ public class Login extends JFrame {
 
     public void setControllers(ActionListener actionListener) {
         this.btLogin.addActionListener(actionListener);
-        this.btCreateProfile.addActionListener(actionListener);
+        this.btRegister.addActionListener(actionListener);
     }
 
     public String getUsername() {

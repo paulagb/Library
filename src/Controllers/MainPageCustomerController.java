@@ -2,8 +2,8 @@ package Controllers;
 
 import Database.DAO.BookDAO;
 import Model.Book;
-import UI.CreateProfile;
-import UI.MainCustomer;
+import ui.CreateProfile;
+import ui.MainCustomer;
 import com.sun.tools.javac.Main;
 import service.Library;
 

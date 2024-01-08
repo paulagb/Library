@@ -2,9 +2,9 @@ import Controllers.CreateProfileController;
 import Controllers.LoginController;
 import Controllers.MainPageCustomerController;
 import Controllers.MasterController;
-import UI.CreateProfile;
-import UI.Login;
-import UI.MainCustomer;
+import ui.CreateProfile;
+import ui.Login;
+import ui.MainCustomer;
 import service.Library;
 
 import java.awt.*;
@@ -34,8 +34,8 @@ public class Main {
                 logic.setMasterController(masterController);
 
 
-                //loginView.setVisible(true);
-                mainPageCustomerController.showBooks();
+                loginView.setVisible(true);
+                //mainPageCustomerController.showBooks();
 
 
             }
