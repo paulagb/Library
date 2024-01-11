@@ -44,4 +44,24 @@ public class Book {
     public void setAvailable(boolean available) {
         isAvailable = available;
     }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getBookId() {
+        return bookId;
+    }
 }
