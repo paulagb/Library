@@ -2,6 +2,7 @@ package Database.DAO;
 
 
 import Database.ConnectionDB;
+import Model.Book;
 import Model.User;
 
 import java.sql.ResultSet;
@@ -49,7 +50,7 @@ public class UserDAO {
     }
 
     public User checkCredentials(String username, String password) {
-        String sql = "SELECT email, password FROM User WHERE email = '" + username + "' AND password = '" + password + "'";
+        String sql = "SELECT name, surname, email, user_type, password FROM User WHERE email = '" + username + "' AND password = '" + password + "'";
         ResultSet rs = conn.selectQuery(sql);
         try {
             if (rs.next()) {
@@ -74,5 +75,16 @@ public class UserDAO {
         String sql = "INSERT INTO User (name, surname, user_type, email, password) VALUES ('" + name + "',' " + surname + "', " + "' " + user_type + "', '" + email + "', '" + password + "')";
 
         return conn.insertQuery(sql);
+    }
+
+    public boolean checkProfileExists(String email) {
+        String sql = " SELECT * FROM User where email = '" + email + "'";
+        ResultSet rs = conn.selectQuery(sql);
+        try {
+            return rs.next();
+        } catch (SQLException throwables) {
+            throwables.getSQLState();
+        }
+        return false;
     }
 }

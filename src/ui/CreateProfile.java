@@ -2,26 +2,10 @@ package ui;
 
 
 import Controllers.CreateProfileController;
-import Controllers.LoginController;
-import service.Library;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-
-
-import java.awt.Toolkit;
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.JSeparator;
-import javax.swing.JTextField;
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.*;
 
 public class CreateProfile extends JFrame {
 
@@ -147,12 +131,15 @@ public class CreateProfile extends JFrame {
     public String getPassword() {
         return new String(pfPassword.getPassword());
     }
+
     public String getPassword1() {
         return new String(pfPassword.getPassword());
     }
 
 
-    public String getEmail() { return tfEmail.getText(); }
+    public String getEmail() {
+        return tfEmail.getText();
+    }
 
 
     public void showMessage(String message) {

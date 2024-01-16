@@ -1,10 +1,5 @@
-import Controllers.CreateProfileController;
-import Controllers.LoginController;
-import Controllers.MainPageCustomerController;
-import Controllers.MasterController;
-import ui.CreateProfile;
-import ui.Login;
-import ui.MainCustomer;
+import Controllers.*;
+import ui.*;
 import service.Library;
 
 import java.awt.*;
@@ -26,16 +21,33 @@ public class Main {
                 CreateProfileController createProfileController = new CreateProfileController(createProfileView, logic);
                 createProfileView.setControllers(createProfileController);
 
+                // MAIN CUSTOMER
                 MainCustomer mainCustomerView = new MainCustomer();
                 MainPageCustomerController mainPageCustomerController = new MainPageCustomerController(mainCustomerView, logic);
                 mainCustomerView.setControllers(mainPageCustomerController);
 
-                MasterController masterController = new MasterController(loginController, createProfileController, mainPageCustomerController);
+                //FAVOURITE BOOKS
+                Favourites favouritesView = new Favourites();
+                FavouriteController favouriteController = new FavouriteController(favouritesView,logic);
+                favouritesView.setControllers(favouriteController);
+
+                //RENTED BOOKS
+                RentedBooks rentedBooksView = new RentedBooks();
+                RentedBookController rentedBookController = new RentedBookController(rentedBooksView,logic);
+                rentedBooksView.setControllers(rentedBookController);
+
+                //TODO RESERVED BOOKS VIEW
+
+
+                MasterController masterController = new MasterController(loginController, createProfileController, mainPageCustomerController, favouriteController,rentedBookController);
                 logic.setMasterController(masterController);
 
 
                 loginView.setVisible(true);
                 //mainPageCustomerController.showBooks();
+
+               // logic.listRentedBooks("john@example.com");
+
 
 
             }

@@ -1,23 +1,11 @@
 package ui;
 
-import Controllers.LoginController;
 import Controllers.MainPageCustomerController;
 import Model.Book;
-import service.Library;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import java.awt.Toolkit;
-import java.awt.Color;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EtchedBorder;
-
-
-import java.awt.Rectangle;
-
-import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
@@ -28,7 +16,10 @@ public class MainCustomer extends JFrame {
     private ArrayList<Book> books;
     private JPanel contentPane;
     private JTextField tfSearch;
-
+    private JButton btSearch;
+    private JButton btProfile;
+    private JButton btNotification;
+    private JButton btFavorites;
 
 
     /**
@@ -84,48 +75,32 @@ public class MainCustomer extends JFrame {
         pnBar.add(tfSearch);
         tfSearch.setColumns(10);
 
-        JButton btSearch = new JButton("");
-        btSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //search in books list
-            }
-        });
+        btSearch = new JButton("");
+        btSearch.setActionCommand("btSearch");
         btSearch.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/magnifying-glass.png")));
         btSearch.setForeground(new Color(255, 255, 255));
         btSearch.setBackground(new Color(218, 165, 32));
         btSearch.setBounds(256, 14, 33, 26);
         pnBar.add(btSearch);
 
-        JButton btProfile = new JButton("");
-        btProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //show rented books
-            }
-        });
+        btProfile = new JButton("");
+        btProfile.setActionCommand("btProfile");
         btProfile.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/user.png")));
         btProfile.setBackground(new Color(70, 130, 180));
         btProfile.setForeground(new Color(0, 0, 0));
         btProfile.setBounds(888, -3, 66, 59);
         pnBar.add(btProfile);
 
-        JButton btNotification = new JButton("");
-        btNotification.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //show notifications
-            }
-        });
+        btNotification = new JButton("");
+        btNotification.setActionCommand("btNotification");
         btNotification.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/bell.png")));
         btNotification.setForeground(Color.BLACK);
         btNotification.setBackground(new Color(70, 130, 180));
         btNotification.setBounds(826, -2, 66, 59);
         pnBar.add(btNotification);
 
-        JButton btFavorites = new JButton("");
-        btFavorites.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //show favorites
-            }
-        });
+        btFavorites = new JButton("");
+        btFavorites.setActionCommand("btFavourites");
         btFavorites.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/heart.png")));
         btFavorites.setForeground(Color.BLACK);
         btFavorites.setBackground(new Color(70, 130, 180));
@@ -158,10 +133,16 @@ public class MainCustomer extends JFrame {
     public void setBooks(ArrayList<Book> books) {
         this.books = books;
     }
-    public void showView(boolean state) { setVisible(state); }
 
-    public void setControllers(MainPageCustomerController mainPageCustomerController){
+    public void showView(boolean state) {
+        setVisible(state);
+    }
 
+    public void setControllers(MainPageCustomerController mainPageCustomerController) {
+        btSearch.addActionListener(mainPageCustomerController);
+        btProfile.addActionListener(mainPageCustomerController);
+        btNotification.addActionListener(mainPageCustomerController);
+        btFavorites.addActionListener(mainPageCustomerController);
     }
 
     public void showMessage(String message) {

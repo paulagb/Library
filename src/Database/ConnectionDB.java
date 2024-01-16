@@ -70,6 +70,16 @@ public class ConnectionDB {
         return rowsInserted > 0;
     }
 
+    public boolean updateQuery (String query){
+        try {
+            s =(Statement) conn.createStatement();
+            s.executeUpdate(query);
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("Problema al Modificar --> " + ex.getSQLState() + "\n");
+            return false;
+        }
+    }
     public void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");

@@ -1,7 +1,7 @@
 package Controllers;
 
-import ui.Login;
 import service.Library;
+import ui.Login;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,7 +21,6 @@ public class LoginController implements ActionListener {
         String username = loginView.getUsername();
         String password = loginView.getPassword();
 
-
         if (username.isBlank() || password.isBlank()) {
             loginView.showMessage("Email or password is blank");
         } else if (logic.checkCredentials(username, password)) {
@@ -29,11 +28,6 @@ public class LoginController implements ActionListener {
         } else {
             loginView.showMessage("Email or password does not exists");
         }
-    }
-
-    public boolean checkCredentials(String user, String password) {
-
-        return true; //library method that check user data base
     }
 
     @Override

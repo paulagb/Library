@@ -1,13 +1,17 @@
 package ui;
 
+import Controllers.FavouriteController;
+import Controllers.RentedBookController;
+import Model.Book;
+
 import java.awt.Color;
-import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +27,11 @@ public class RentedBooks extends JFrame {
 
     private JPanel contentPane;
     private JTextField tfSearch;
+    private JButton btSearch;
+    private JButton btProfile;
+    private JButton btNotification;
+    private JButton btFavorites;
+    private ArrayList<Book> rentedBooks;
 
 
 
@@ -79,7 +88,7 @@ public class RentedBooks extends JFrame {
         pnBar.add(tfSearch);
         tfSearch.setColumns(10);
 
-        JButton btSearch = new JButton("");
+        btSearch = new JButton("");
         btSearch.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //search in books list
@@ -91,7 +100,7 @@ public class RentedBooks extends JFrame {
         btSearch.setBounds(256, 14, 33, 26);
         pnBar.add(btSearch);
 
-        JButton btProfile = new JButton("");
+        btProfile = new JButton("");
         btProfile.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //show rented books
@@ -103,7 +112,7 @@ public class RentedBooks extends JFrame {
         btProfile.setBounds(888, -3, 66, 59);
         pnBar.add(btProfile);
 
-        JButton btNotification = new JButton("");
+        btNotification = new JButton("");
         btNotification.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //show notifications
@@ -115,7 +124,7 @@ public class RentedBooks extends JFrame {
         btNotification.setBounds(826, -2, 66, 59);
         pnBar.add(btNotification);
 
-        JButton btFavorites = new JButton("");
+        btFavorites = new JButton("");
         btFavorites.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //show favorites
@@ -150,5 +159,19 @@ public class RentedBooks extends JFrame {
         spBooks.setBackground(new Color(255, 255, 255));
         spBooks.setBounds(152, 200, 653, 311);
         contentPane.add(spBooks);
+    }
+    public void setControllers(RentedBookController rentedBookController) {
+        btFavorites.addActionListener(rentedBookController);
+        btNotification.addActionListener(rentedBookController);
+        btProfile.addActionListener(rentedBookController);
+        btSearch.addActionListener(rentedBookController);
+    }
+
+    public void showView(boolean b) {
+        setVisible(b);
+    }
+
+    public void setRentedBooks(ArrayList<Book> books) {
+        rentedBooks = books;
     }
 }

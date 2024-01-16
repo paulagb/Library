@@ -1,6 +1,5 @@
 package ui;
 
-import javax.imageio.plugins.tiff.BaselineTIFFTagSet;
 import javax.swing.*;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EtchedBorder;
