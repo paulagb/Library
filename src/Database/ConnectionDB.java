@@ -80,6 +80,17 @@ public class ConnectionDB {
             return false;
         }
     }
+
+    public boolean deleteQuery(String query) {
+        try {
+            s =(Statement) conn.createStatement();
+            s.executeUpdate(query);
+            return true;
+        } catch (SQLException ex) {
+            System.out.println("Problema al Modificar --> " + ex.getSQLState() + "\n");
+            return false;
+        }
+    }
     public void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -99,7 +110,6 @@ public class ConnectionDB {
 
     }
 
-
     /**
      * disconnect the database.
      */
@@ -110,5 +120,6 @@ public class ConnectionDB {
             System.out.println("Problema al tancar la connexiÃ³ --> " + e.getSQLState() + "\n");
         }
     }
+
 
 }

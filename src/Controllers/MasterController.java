@@ -1,5 +1,7 @@
 package Controllers;
 
+import Model.User;
+
 public class MasterController {
 
     private LoginController loginController;
@@ -17,8 +19,9 @@ public class MasterController {
         this.favouriteController = favouriteController;
     }
 
-    public void okLoginCustomer() {
+    public void okLoginCustomer(User user) {
         loginController.displayView(false);
+        mainPageCustomerController.getBooks(user);
         mainPageCustomerController.displayView(true);
     }
 
@@ -42,8 +45,8 @@ public class MasterController {
     }
 
     public void profile() {
-        mainPageCustomerController.displayView(false);
-        //TODO MISSING PROFILE VIEW
+        //TODO REFRESH MAIN PAGE, WITH BOOKS
+        mainPageCustomerController.displayView(true);
     }
 
     public void favBooks(String userEmail) {

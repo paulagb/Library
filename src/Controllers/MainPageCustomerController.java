@@ -2,6 +2,7 @@ package Controllers;
 
 import Database.DAO.BookDAO;
 import Model.Book;
+import Model.User;
 import service.Library;
 import ui.MainCustomer;
 
@@ -18,11 +19,14 @@ public class MainPageCustomerController implements ActionListener {
         this.logic = logic;
     }
 
-    public void displayView(boolean b) {
+    public void getBooks(User user) {
+        ArrayList<Book> books = new ArrayList<>();
         BookDAO bookDAO = new BookDAO();
-        ArrayList<Book> books = (ArrayList<Book>) bookDAO.getBooks();
-        //System.out.println(books);
+        books = (ArrayList<Book>) bookDAO.getBooks(user.getUserID());
         mainCustomerView.setBooks(books);
+    }
+
+    public void displayView(boolean b) {
         mainCustomerView.showView(b);
     }
 
@@ -31,9 +35,13 @@ public class MainPageCustomerController implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "btProfile" -> logic.changeView("profile");
-            case "btSearch" -> System.out.println("searching");
+            case "btSearch" -> {
+                System.out.println("searching");
+                mainCustomerView.setBooks(logic.search(mainCustomerView.getSearch()));
+                //TODO REFRESH MAIN CUSTOMER VIEW, PARA QUE SALGA LA SEARCH
+
+            }
             case "btFavourites" -> logic.changeView("favourites");
-            case "btNotification" -> logic.changeView("notification");
         }
 
     }

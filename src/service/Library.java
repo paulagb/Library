@@ -2,21 +2,25 @@ package service;
 
 import Controllers.MasterController;
 import Database.DAO.BookDAO;
+import Database.DAO.SearchDAO;
 import Database.DAO.UserDAO;
 import Model.Book;
 import Model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Library {
-    private UserDAO userDAO;
+    private final UserDAO userDAO;
     private MasterController masterController;
     private User user;
-    private BookDAO bookDAO;
+    private final BookDAO bookDAO;
+    private final SearchDAO searchDAO;
 
     public Library() {
         userDAO = new UserDAO();
         bookDAO = new BookDAO();
+        searchDAO = new SearchDAO();
     }
 
     public void setMasterController(MasterController masterController) {
@@ -30,11 +34,10 @@ public class Library {
                 break;
             case "mainPage":
                 if (user.getUserType().equals("user")) {
-                    masterController.okLoginCustomer();
+                    masterController.okLoginCustomer(user);
                 } else {
                     masterController.okLoginAdmin();
                 }
-                masterController.okLoginCustomer();
                 break;
             case "login":
                 masterController.login();
@@ -87,5 +90,8 @@ public class Library {
         return bookDAO.rentBook(book);
     }
 
+    public ArrayList<Book> search(String search) {
+        return searchDAO.searchByAuthorOrTitle(user, search);
+    }
 }
 

@@ -35,6 +35,17 @@ public class FavouriteController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        switch (e.getActionCommand()){
+            case "btProfile" -> logic.changeView("profile");
+            case "btSearch" -> {
+                System.out.println("searching");
+                //TODO descomentar
+                //favView.setBooks(logic.search(mainCustomerView.getSearch()));
+                //TODO REFRESH MAIN CUSTOMER VIEW, PARA QUE SALGA LA SEARCH
+
+            }
+            case "btFavourites" -> logic.changeView("favourites");
+        }
 
     }
 

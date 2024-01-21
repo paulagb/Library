@@ -132,6 +132,9 @@ public class MainCustomer extends JFrame {
 
     public void setBooks(ArrayList<Book> books) {
         this.books = books;
+       /* for (Book book : books) {
+            System.out.println(book.getBookId() + book.getAuthor() + book.getDescription() + book.getGenre() + book.isReserved() + book.isRented() + book.isFavourite()  );
+        }*/
     }
 
     public void showView(boolean state) {
@@ -149,4 +152,7 @@ public class MainCustomer extends JFrame {
         JOptionPane.showMessageDialog(this, message);
     }
 
+    public String getSearch() {
+        return tfSearch.getText();
+    }
 }

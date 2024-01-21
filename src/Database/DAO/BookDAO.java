@@ -2,6 +2,7 @@ package Database.DAO;
 
 import Database.ConnectionDB;
 import Model.Book;
+import Model.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,9 +17,14 @@ public class BookDAO {
         conn = ConnectionDB.getInstance();
     }
 
-    public List<Book> getBooks() {
+    public List<Book> getBooks(int user_id) {
         List<Book> books = new ArrayList<>();
-        String sql = "SELECT * FROM BookTemplate, Book WHERE book_template_ID = book_ID";
+        String sql = "SELECT BookTemplate.*, Book.*, Favourites.FK_user_id AS user_id, " +
+                "CASE WHEN Favourites.FK_user_id IS NOT NULL THEN 1 ELSE 0 END AS is_favorite " +
+                "FROM BookTemplate " +
+                "JOIN Book ON BookTemplate.book_template_ID = Book.FK_book_template_ID " +
+                "LEFT JOIN Favourites ON Favourites.FK_book_template_ID = BookTemplate.book_template_ID " +
+                "AND Favourites.FK_user_id = " + user_id + " ";
 
         ResultSet rs = conn.selectQuery(sql);
 
@@ -30,6 +36,13 @@ public class BookDAO {
                 book.setTitle(rs.getString("title"));
                 book.setDescription(rs.getString("description"));
                 book.setGenre(rs.getString("genre"));
+                book.setFavourite(rs.getBoolean("is_favorite"));
+                book.setRented(false);
+                book.setReserved(false);
+                switch (rs.getString("state")) {
+                    case "rented" -> book.setRented(true);
+                    case "reserved" -> book.setRented(false);
+                }
                 books.add(book);
             }
 
@@ -143,11 +156,35 @@ public class BookDAO {
         return false;
     }
 
+    public boolean reserveBook(Book book) {
+
+        return false;
+    }
+
+    public boolean addFavBook(Book book, User user) {
+        String sql = "INSERT INTO Favourites (FK_book_template_ID, FK_user_id)" +
+                "VALUES ('" + book.getBookId() + "', '" + user.getUserID() + "')" +
+                "ON DUPLICATE KEY UPDATE FK_book_template_ID = '" + book.getBookId() + "', FK_user_id = '" + user.getUserID() + "';";
+        return conn.insertQuery(sql);
+    }
+
+    public boolean removeFavBook(Book book, User user) {
+        String sql = "DELETE FROM Favourites" +
+                "WHERE FK_book_template_ID = '" + book.getBookId() +
+                "' AND FK_user_id = '" + user.getUserID() + "';";
+        return conn.deleteQuery(sql);
+    }
+
+    public boolean updateBookStatus(Book book, String status, User user) {
+        String sql = "DELETE FROM Favourites" +
+                "WHERE FK_book_template_ID = '" + book.getBookId()
+                + "' AND FK_user_id = '" + user.getUserID() + "';";
+        return false;
+    }
+
     public boolean addBook(Book book) {
         //TODO UPDATE QUERY
         String sql = "UPDATE ";
         return conn.updateQuery(sql);
     }
-
-
 }
