@@ -10,7 +10,6 @@ public class Main {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Library logic = new Library();
-
                 //LOGIN CUSTOMER
                 Login loginView = new Login();
                 LoginController loginController = new LoginController(loginView, logic);

@@ -6,8 +6,7 @@ import Model.Book;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class Favourites extends JFrame {
@@ -43,6 +42,13 @@ public class Favourites extends JFrame {
         pnBar.setLayout(null);
 
         JLabel lblLibrary = new JLabel("Library\u2122");
+        lblLibrary.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //TO DO
+                //go back to MainCustomer
+            }
+        });
         lblLibrary.setForeground(new Color(255, 255, 255));
         lblLibrary.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
         lblLibrary.setBounds(50, 10, 98, 24);
@@ -75,6 +81,11 @@ public class Favourites extends JFrame {
         tfSearch.setColumns(10);
 
         btSearch = new JButton("");
+        btSearch.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //search in books list
+            }
+        });
         btSearch.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/magnifying-glass.png")));
         btSearch.setForeground(new Color(255, 255, 255));
         btSearch.setBackground(new Color(218, 165, 32));
@@ -82,26 +93,27 @@ public class Favourites extends JFrame {
         pnBar.add(btSearch);
 
         btProfile = new JButton("");
-
+        btProfile.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //show rented books
+            }
+        });
         btProfile.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/user.png")));
         btProfile.setBackground(new Color(70, 130, 180));
         btProfile.setForeground(new Color(0, 0, 0));
         btProfile.setBounds(888, -3, 66, 59);
         pnBar.add(btProfile);
 
-        btNotification = new JButton("");
-        btNotification.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/bell.png")));
-        btNotification.setForeground(Color.BLACK);
-        btNotification.setBackground(new Color(70, 130, 180));
-        btNotification.setBounds(826, -2, 66, 59);
-        pnBar.add(btNotification);
-
         btFavorites = new JButton("");
-
+        btFavorites.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //show favorites
+            }
+        });
         btFavorites.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/heart.png")));
         btFavorites.setForeground(Color.BLACK);
         btFavorites.setBackground(new Color(70, 130, 180));
-        btFavorites.setBounds(768, -2, 59, 59);
+        btFavorites.setBounds(819, -3, 59, 59);
         pnBar.add(btFavorites);
 
         JPanel pnTitle = new JPanel();
@@ -127,6 +139,28 @@ public class Favourites extends JFrame {
         spBooks.setBackground(new Color(255, 255, 255));
         spBooks.setBounds(152, 200, 653, 311);
         contentPane.add(spBooks);
+
+        JPanel pnBooks = new JPanel();
+        pnBooks.setBackground(new Color(255, 255, 255));
+        spBooks.setViewportView(pnBooks);
+
+        //TO DO
+        //Method to access to favourites
+        /*
+        PanelBook element;
+        for(int i = 0; i < library.getNumberOfFavourites();i++) {
+            element = new PanelBook(library.getAllFavourites()[i]);
+            element.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    //TO DO
+                    //show BookView
+                }
+            });
+            pnBooks.add(element);
+        }
+
+         */
     }
 
     public void setControllers(FavouriteController favController) {

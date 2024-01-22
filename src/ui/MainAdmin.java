@@ -122,7 +122,23 @@ public class MainAdmin extends JFrame {
 
         JScrollPane spBooks = new JScrollPane();
         spBooks.setBackground(new Color(255, 255, 255));
-        spBooks.setBounds(0, 171, 975, 370);
+        spBooks.setBounds(79, 183, 819, 348);
         contentPane.add(spBooks);
+
+        JPanel pnBooks = new JPanel();
+        pnBooks.setBackground(new Color(255, 255, 255));
+        spBooks.setViewportView(pnBooks);
+        pnBooks.setLayout(new GridLayout(0, 1, 0, 0));
+
+        //TO DO
+        //METHOD TO ACCESS TO ALL BOOKS
+        /*
+        PanelBook element;
+        for(int i = 0; i < library.getNumberOfBooks(); i++) {
+            element = new PanelBook(library.getAllBooks()[i]);
+            pnBooks.add(element);
+        }
+
+         */
     }
 }

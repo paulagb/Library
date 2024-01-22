@@ -1,13 +1,7 @@
 package ui;
 
-import java.awt.Color;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -47,6 +41,13 @@ public class Users extends JFrame {
         pnBar.setLayout(null);
 
         JLabel lblLibrary = new JLabel("Library\u2122");
+        lblLibrary.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //TO DO
+                //go to MainAdmin
+            }
+        });
         lblLibrary.setForeground(new Color(255, 255, 255));
         lblLibrary.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
         lblLibrary.setBounds(50, 10, 98, 24);
@@ -133,9 +134,25 @@ public class Users extends JFrame {
         lblImgBooks.setVerticalAlignment(JLabel.CENTER);
         pnTitle.add(lblImgBooks);
 
-        JScrollPane spBooks = new JScrollPane();
-        spBooks.setBackground(new Color(255, 255, 255));
-        spBooks.setBounds(0, 171, 975, 370);
-        contentPane.add(spBooks);
+        JScrollPane spUsers = new JScrollPane();
+        spUsers.setBackground(new Color(255, 255, 255));
+        spUsers.setBounds(119, 184, 711, 347);
+        contentPane.add(spUsers);
+
+        JPanel pnUsers = new JPanel();
+        pnUsers.setBackground(new Color(255, 255, 255));
+        spUsers.setViewportView(pnUsers);
+        pnUsers.setLayout(new GridLayout(0, 1, 0, 0));
+
+        //TO DO
+        //METHOD TO ACCESS TO USERS
+        /*
+        PanelUser element;
+        for(int i = 0; i < library.getNumberOfUsers(); i++) {
+            element = new PanelUser(library.getUsers()[i]);
+            pnUsers.add(element);
+        }
+
+         */
     }
 }

@@ -3,11 +3,9 @@ package ui;
 import Model.Book;
 
 import javax.swing.JPanel;
-import java.awt.Color;
-import java.awt.GridLayout;
+import java.awt.*;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.Font;
 import javax.swing.ImageIcon;
 import javax.swing.SwingConstants;
 
@@ -28,8 +26,12 @@ public class PanelBook extends JPanel {
         setLayout(new GridLayout(0, 2, 0, 0));
 
         JLabel lblImgBook = new JLabel("");
-        lblImgBook.setIcon(new ImageIcon(PanelBook.class.getResource("/img/" + this.book.getTitle() + ".png")));
-        //check images name
+        ImageIcon imageIcon = new ImageIcon(BookView.class.getResource(this.book.getImagePath()));
+        lblImgBook.setIcon(imageIcon);
+        Dimension labelSize = lblImgBook.getPreferredSize();
+        Image image = imageIcon.getImage().getScaledInstance(labelSize.width, labelSize.height, Image.SCALE_SMOOTH);
+        ImageIcon adjustedImageIcon = new ImageIcon(image);
+        lblImgBook.setIcon(adjustedImageIcon);
         add(lblImgBook);
 
         JPanel pnInfo = new JPanel();

@@ -7,10 +7,7 @@ import Model.Book;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -29,7 +26,6 @@ public class RentedBooks extends JFrame {
     private JTextField tfSearch;
     private JButton btSearch;
     private JButton btProfile;
-    private JButton btNotification;
     private JButton btFavorites;
     private ArrayList<Book> rentedBooks;
 
@@ -57,6 +53,13 @@ public class RentedBooks extends JFrame {
         pnBar.setLayout(null);
 
         JLabel lblLibrary = new JLabel("Library\u2122");
+        lblLibrary.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //TO DO
+                //back to MainCustomer
+            }
+        });
         lblLibrary.setForeground(new Color(255, 255, 255));
         lblLibrary.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 18));
         lblLibrary.setBounds(50, 10, 98, 24);
@@ -112,17 +115,6 @@ public class RentedBooks extends JFrame {
         btProfile.setBounds(888, -3, 66, 59);
         pnBar.add(btProfile);
 
-        btNotification = new JButton("");
-        btNotification.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //show notifications
-            }
-        });
-        btNotification.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/bell.png")));
-        btNotification.setForeground(Color.BLACK);
-        btNotification.setBackground(new Color(70, 130, 180));
-        btNotification.setBounds(826, -2, 66, 59);
-        pnBar.add(btNotification);
 
         btFavorites = new JButton("");
         btFavorites.addActionListener(new ActionListener() {
@@ -133,7 +125,7 @@ public class RentedBooks extends JFrame {
         btFavorites.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/heart.png")));
         btFavorites.setForeground(Color.BLACK);
         btFavorites.setBackground(new Color(70, 130, 180));
-        btFavorites.setBounds(768, -2, 59, 59);
+        btFavorites.setBounds(817, -3, 59, 59);
         pnBar.add(btFavorites);
 
         JPanel pnTitle = new JPanel();
@@ -159,10 +151,26 @@ public class RentedBooks extends JFrame {
         spBooks.setBackground(new Color(255, 255, 255));
         spBooks.setBounds(152, 200, 653, 311);
         contentPane.add(spBooks);
+
+        JPanel pnBooks = new JPanel();
+        pnBooks.setBackground(new Color(255, 255, 255));
+        spBooks.setViewportView(pnBooks);
+
+        //TO DO
+        //METHOD TO ACCESS TO RENTED BOOKS
+        /*
+        PanelRentedBook element;
+        for(int i = 0; i < library.getNumberOfRentedBooks(); i++) {
+            element = new PanelRentedBook(library.getRentedBooks()[i]);
+            element.getBtReturned().setVisible(false);
+            element.getBtReturned().setEnabled(false);
+            pnBooks.add(element);
+        }
+
+         */
     }
     public void setControllers(RentedBookController rentedBookController) {
         btFavorites.addActionListener(rentedBookController);
-        btNotification.addActionListener(rentedBookController);
         btProfile.addActionListener(rentedBookController);
         btSearch.addActionListener(rentedBookController);
     }

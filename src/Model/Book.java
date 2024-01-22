@@ -10,8 +10,10 @@ public class Book {
     private boolean isRented;
     private boolean isReserved;
 
+    private String imagePath;
 
-    public Book(int bookId, String title, String author, String description, String genre, boolean isFavourite, boolean isRented, boolean isReserved) {
+
+    public Book(int bookId, String title, String author, String description, String genre, boolean isFavourite, boolean isRented, boolean isReserved, String imagePath) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
@@ -20,6 +22,7 @@ public class Book {
         this.isFavourite = isFavourite;
         this.isRented = isRented;
         this.isReserved = isReserved;
+        this.imagePath = imagePath;
     }
 
     public Book() {
@@ -89,5 +92,13 @@ public class Book {
     public void setReserved(boolean reserved) {
         isReserved = reserved;
     }
+
+    public String getImagePath(){return imagePath;}
+
+
+    //TO DO: methods to get dates
+    public String getRentedDate(){return "";}
+
+    public String getDeadlineDate(){return "";}
 
 }

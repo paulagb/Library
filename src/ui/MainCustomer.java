@@ -8,6 +8,8 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class MainCustomer extends JFrame {
@@ -18,7 +20,6 @@ public class MainCustomer extends JFrame {
     private JTextField tfSearch;
     private JButton btSearch;
     private JButton btProfile;
-    private JButton btNotification;
     private JButton btFavorites;
 
 
@@ -91,20 +92,13 @@ public class MainCustomer extends JFrame {
         btProfile.setBounds(888, -3, 66, 59);
         pnBar.add(btProfile);
 
-        btNotification = new JButton("");
-        btNotification.setActionCommand("btNotification");
-        btNotification.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/bell.png")));
-        btNotification.setForeground(Color.BLACK);
-        btNotification.setBackground(new Color(70, 130, 180));
-        btNotification.setBounds(826, -2, 66, 59);
-        pnBar.add(btNotification);
 
         btFavorites = new JButton("");
         btFavorites.setActionCommand("btFavourites");
         btFavorites.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/heart.png")));
         btFavorites.setForeground(Color.BLACK);
         btFavorites.setBackground(new Color(70, 130, 180));
-        btFavorites.setBounds(768, -2, 59, 59);
+        btFavorites.setBounds(819, -3, 59, 59);
         pnBar.add(btFavorites);
 
         JPanel pnTitle = new JPanel();
@@ -126,8 +120,30 @@ public class MainCustomer extends JFrame {
 
         JScrollPane spBooks = new JScrollPane();
         spBooks.setBackground(new Color(255, 255, 255));
-        spBooks.setBounds(0, 171, 975, 370);
+        spBooks.setBounds(152, 200, 653, 311);
         contentPane.add(spBooks);
+
+        JPanel pnBooks = new JPanel();
+        pnBooks.setBackground(new Color(255, 255, 255));
+        spBooks.setViewportView(pnBooks);
+        pnBooks.setLayout(new GridLayout(0, 1, 0, 0));
+
+        //TO DO
+        //CHANGE METHOD TO ACCESS BOOKS
+        /*
+        PanelBook element;
+        for(int i = 0; i < library.getNumberOfBooks(); i++) {
+            element = new PanelBook(library.getAllBooks()[i]);
+            element.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    //show BookView
+                }
+            });
+            pnBooks.add(element);
+        }
+
+         */
     }
 
     public void setBooks(ArrayList<Book> books) {
@@ -144,7 +160,6 @@ public class MainCustomer extends JFrame {
     public void setControllers(MainPageCustomerController mainPageCustomerController) {
         btSearch.addActionListener(mainPageCustomerController);
         btProfile.addActionListener(mainPageCustomerController);
-        btNotification.addActionListener(mainPageCustomerController);
         btFavorites.addActionListener(mainPageCustomerController);
     }
 
