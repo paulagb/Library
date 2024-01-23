@@ -149,6 +149,7 @@ public class MainCustomer extends JFrame {
     public void setBooks(ArrayList<Book> books) {
         this.books = books;
         for (Book book : books) {
+            System.out.println(book.getTitle());
             PanelBook element = new PanelBook(book);
             element.addMouseListener(new MouseAdapter() {
                 @Override
@@ -176,5 +177,11 @@ public class MainCustomer extends JFrame {
 
     public String getSearch() {
         return tfSearch.getText();
+    }
+
+    public void refresh() {
+        pnBooks.removeAll();
+        pnBooks.revalidate();
+        pnBooks.repaint();
     }
 }

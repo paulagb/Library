@@ -32,6 +32,14 @@ public class Book {
 
     }
 
+    public Book(String title, String author, String genre, String description, String image) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.description = description;
+        this.imagePath = image;
+    }
+
     public int setBookId(int book_id) {
         return bookId;
     }

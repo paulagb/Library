@@ -1,5 +1,7 @@
 package ui;
 
+import Model.Book;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -13,6 +15,10 @@ public class AddBook extends JFrame {
     private JButton btAdd;
     private JButton btDiscard;
     private JButton btImage;
+    private JTextArea taGenre;
+    private JTextArea taAuthor;
+    private JTextArea taTitle;
+    private JTextArea taDescription;
 
 
     /**
@@ -30,7 +36,7 @@ public class AddBook extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JTextArea taDescription = new JTextArea();
+        taDescription = new JTextArea();
         taDescription.setText("Description...");
         taDescription.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 12));
         taDescription.setEditable(true);
@@ -94,8 +100,7 @@ public class AddBook extends JFrame {
         btImage.setBounds(28, 39, 132, 125);
         contentPane.add(btImage);
 
-
-        JTextArea taTitle = new JTextArea();
+        taTitle = new JTextArea();
         taTitle.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 16));
         taTitle.setText("Title");
         taTitle.setBounds(187, 39, 79, 22);
@@ -119,7 +124,7 @@ public class AddBook extends JFrame {
         });
         contentPane.add(taTitle);
 
-        JTextArea taAuthor = new JTextArea();
+        taAuthor = new JTextArea();
         taAuthor.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 15));
         taAuthor.setBounds(187, 83, 79, 22);
         taAuthor.setText("Author");
@@ -143,7 +148,7 @@ public class AddBook extends JFrame {
         });
         contentPane.add(taAuthor);
 
-        JTextArea taGenre = new JTextArea();
+        taGenre = new JTextArea();
         taGenre.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 15));
         taGenre.setBounds(187, 119, 79, 22);
         taGenre.setText("Genre");
@@ -179,4 +184,14 @@ public class AddBook extends JFrame {
 
     }
 
+    public Book getBook() {
+
+        String title = taTitle.getText();
+        String author = taAuthor.getText();
+        String genre = taGenre.getText();
+        String description = taDescription.getText();
+        String image = btImage.getText();
+        Book book = new Book(title, author, genre, description, image);
+        return book;
+    }
 }

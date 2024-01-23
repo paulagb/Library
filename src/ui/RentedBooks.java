@@ -1,24 +1,13 @@
 package ui;
 
-import Controllers.FavouriteController;
-import Controllers.RentedBookController;
+import Controllers.RentedBooksController;
 import Model.Book;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Toolkit;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 
 public class RentedBooks extends JFrame {
 
@@ -28,7 +17,7 @@ public class RentedBooks extends JFrame {
     private JButton btProfile;
     private JButton btFavorites;
     private ArrayList<Book> rentedBooks;
-
+    private JPanel pnBooks;
 
 
     /**
@@ -117,11 +106,7 @@ public class RentedBooks extends JFrame {
 
 
         btFavorites = new JButton("");
-        btFavorites.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //show favorites
-            }
-        });
+        btFavorites.setActionCommand("btFavorites");
         btFavorites.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/heart.png")));
         btFavorites.setForeground(Color.BLACK);
         btFavorites.setBackground(new Color(70, 130, 180));
@@ -152,27 +137,22 @@ public class RentedBooks extends JFrame {
         spBooks.setBounds(152, 200, 653, 311);
         contentPane.add(spBooks);
 
-        JPanel pnBooks = new JPanel();
+        pnBooks = new JPanel();
         pnBooks.setBackground(new Color(255, 255, 255));
         spBooks.setViewportView(pnBooks);
 
         //TO DO
         //METHOD TO ACCESS TO RENTED BOOKS
         /*
-        PanelRentedBook element;
-        for(int i = 0; i < library.getNumberOfRentedBooks(); i++) {
-            element = new PanelRentedBook(library.getRentedBooks()[i]);
-            element.getBtReturned().setVisible(false);
-            element.getBtReturned().setEnabled(false);
-            pnBooks.add(element);
-        }
+
 
          */
     }
-    public void setControllers(RentedBookController rentedBookController) {
-        btFavorites.addActionListener(rentedBookController);
-        btProfile.addActionListener(rentedBookController);
-        btSearch.addActionListener(rentedBookController);
+
+    public void setControllers(RentedBooksController rentedBooksController) {
+        btFavorites.addActionListener(rentedBooksController);
+        btProfile.addActionListener(rentedBooksController);
+        btSearch.addActionListener(rentedBooksController);
     }
 
     public void showView(boolean b) {
@@ -181,5 +161,14 @@ public class RentedBooks extends JFrame {
 
     public void setRentedBooks(ArrayList<Book> books) {
         rentedBooks = books;
+        System.out.println("Rented books: " + rentedBooks.size());
+        for (Book book : books) {
+            System.out.println(book.getTitle());
+            PanelRentedBook element = new PanelRentedBook(book);
+            element.getBtReturned().setVisible(false);
+            element.getBtReturned().setEnabled(false);
+            pnBooks.add(element);
+        }
     }
+
 }

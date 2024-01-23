@@ -1,22 +1,22 @@
 package ui;
 
+import Controllers.AdminController;
+import Model.User;
+
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.*;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
+import java.util.ArrayList;
 
 public class Users extends JFrame {
 
     private JPanel contentPane;
     private JTextField tfSearch;
-
+    private JButton btSearch;
+    private JButton btProfile;
+    private JButton btAddBook;
+    private JPanel pnUsers;
 
 
     /**
@@ -79,36 +79,24 @@ public class Users extends JFrame {
         pnBar.add(tfSearch);
         tfSearch.setColumns(10);
 
-        JButton btSearch = new JButton("");
-        btSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //search in books list
-            }
-        });
+        btSearch = new JButton("");
+        btSearch.setActionCommand("btSearch");
         btSearch.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/magnifying-glass.png")));
         btSearch.setForeground(new Color(255, 255, 255));
         btSearch.setBackground(new Color(218, 165, 32));
         btSearch.setBounds(256, 14, 33, 26);
         pnBar.add(btSearch);
 
-        JButton btProfile = new JButton("");
-        btProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //show users
-            }
-        });
+        btProfile = new JButton("");
+        btProfile.setActionCommand("btProfile");
         btProfile.setIcon(new ImageIcon(MainAdmin.class.getResource("/img/users.png")));
         btProfile.setBackground(new Color(70, 130, 180));
         btProfile.setForeground(new Color(0, 0, 0));
         btProfile.setBounds(888, -3, 66, 59);
         pnBar.add(btProfile);
 
-        JButton btAddBook = new JButton("");
-        btAddBook.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //add books
-            }
-        });
+        btAddBook = new JButton("");
+        btAddBook.setActionCommand("btAddBook");
         btAddBook.setIcon(new ImageIcon(MainAdmin.class.getResource("/img/add.png")));
         btAddBook.setForeground(Color.BLACK);
         btAddBook.setBackground(new Color(70, 130, 180));
@@ -139,7 +127,7 @@ public class Users extends JFrame {
         spUsers.setBounds(119, 184, 711, 347);
         contentPane.add(spUsers);
 
-        JPanel pnUsers = new JPanel();
+        pnUsers = new JPanel();
         pnUsers.setBackground(new Color(255, 255, 255));
         spUsers.setViewportView(pnUsers);
         pnUsers.setLayout(new GridLayout(0, 1, 0, 0));
@@ -154,5 +142,29 @@ public class Users extends JFrame {
         }
 
          */
+    }
+
+    public void setActionListener(ActionListener actionListener) {
+        btSearch.addActionListener(actionListener);
+        btProfile.addActionListener(actionListener);
+        btAddBook.addActionListener(actionListener);
+    }
+
+    public void setUsers(ArrayList<User> users) {
+        PanelUser element;
+        for (User user : users) {
+            element = new PanelUser(user);
+            pnUsers.add(element);
+        }
+    }
+
+    public void setControllers(AdminController mainAdminController) {
+        btSearch.addActionListener(mainAdminController);
+        btProfile.addActionListener(mainAdminController);
+        btAddBook.addActionListener(mainAdminController);
+    }
+
+    public void showView(boolean b) {
+        setVisible(b);
     }
 }

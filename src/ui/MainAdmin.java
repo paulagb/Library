@@ -1,18 +1,25 @@
 package ui;
 
+import Model.Book;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.util.ArrayList;
 
 public class MainAdmin extends JFrame {
 
     private JPanel contentPane;
     private JTextField tfSearch;
+    private JButton btAddBook;
+    private JButton btProfile;
+    private JButton btSearch;
+    private JPanel pnBooks;
 
+    private ArrayList<Book> books;
 
     /**
      * Create the frame.
@@ -67,36 +74,24 @@ public class MainAdmin extends JFrame {
         pnBar.add(tfSearch);
         tfSearch.setColumns(10);
 
-        JButton btSearch = new JButton("");
-        btSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //search in books list
-            }
-        });
+        btSearch = new JButton("");
+        btSearch.setActionCommand("btSearchMain");
         btSearch.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/magnifying-glass.png")));
         btSearch.setForeground(new Color(255, 255, 255));
         btSearch.setBackground(new Color(218, 165, 32));
         btSearch.setBounds(256, 14, 33, 26);
         pnBar.add(btSearch);
 
-        JButton btProfile = new JButton("");
-        btProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //show users
-            }
-        });
+        btProfile = new JButton("");
+        btProfile.setActionCommand("adminUsers");
         btProfile.setIcon(new ImageIcon(MainAdmin.class.getResource("/img/users.png")));
         btProfile.setBackground(new Color(70, 130, 180));
         btProfile.setForeground(new Color(0, 0, 0));
         btProfile.setBounds(888, -3, 66, 59);
         pnBar.add(btProfile);
 
-        JButton btAddBook = new JButton("");
-        btAddBook.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //add books
-            }
-        });
+        btAddBook = new JButton("");
+        btAddBook.setActionCommand("btAddBook");
         btAddBook.setIcon(new ImageIcon(MainAdmin.class.getResource("/img/add.png")));
         btAddBook.setForeground(Color.BLACK);
         btAddBook.setBackground(new Color(70, 130, 180));
@@ -125,23 +120,49 @@ public class MainAdmin extends JFrame {
         spBooks.setBounds(79, 183, 819, 348);
         contentPane.add(spBooks);
 
-        JPanel pnBooks = new JPanel();
+        pnBooks = new JPanel();
         pnBooks.setBackground(new Color(255, 255, 255));
         spBooks.setViewportView(pnBooks);
         pnBooks.setLayout(new GridLayout(0, 1, 0, 0));
 
-        //TO DO
-        //METHOD TO ACCESS TO ALL BOOKS
-        /*
-        PanelBook element;
-        for(int i = 0; i < library.getNumberOfBooks(); i++) {
-            element = new PanelBook(library.getAllBooks()[i]);
-            pnBooks.add(element);
-        }
-
-         */
     }
+
+    public void setControllers(ActionListener actionListener) {
+        btAddBook.addActionListener(actionListener);
+        btProfile.addActionListener(actionListener);
+        btSearch.addActionListener(actionListener);
+    }
+
+    public String getTfSearch() {
+        return tfSearch.getText();
+    }
+
+    public void setBooks(ArrayList<Book> books) {
+        this.books = books;
+        for (Book book : books) {
+            PanelBook element;
+
+            element = new PanelBook(book);
+            pnBooks.add(element);
+
+
+        }
+    }
+
     public void showView(boolean b) {
         setVisible(b);
+    }
+
+    public String getSearch() {
+        return tfSearch.getText();
+    }
+
+    public void refresh() {
+        pnBooks.removeAll();
+        for (Book book : books) {
+            PanelBook element;
+            element = new PanelBook(book);
+            pnBooks.add(element);
+        }
     }
 }

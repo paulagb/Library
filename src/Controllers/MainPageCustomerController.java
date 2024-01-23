@@ -27,6 +27,7 @@ public class MainPageCustomerController implements ActionListener {
         mainCustomerView.setBooks(books);
     }
 
+
     public void displayView(boolean b) {
         mainCustomerView.showView(b);
     }
@@ -39,6 +40,7 @@ public class MainPageCustomerController implements ActionListener {
             case "btSearch" -> {
                 System.out.println("searching");
                 mainCustomerView.setBooks(logic.search(mainCustomerView.getSearch()));
+                mainCustomerView.refresh();
                 //TODO REFRESH MAIN CUSTOMER VIEW, PARA QUE SALGA LA SEARCH
 
             }

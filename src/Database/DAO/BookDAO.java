@@ -35,21 +35,7 @@ public class BookDAO {
 
         try {
             while (rs.next()) {
-                Book book = new Book();
-                book.setBookId(rs.getInt("book_ID"));
-                book.setAuthor(rs.getString("author"));
-                book.setTitle(rs.getString("title"));
-                book.setDescription(rs.getString("description"));
-                book.setGenre(rs.getString("genre"));
-                book.setFavourite(rs.getBoolean("is_favorite"));
-                book.setRented(false);
-                book.setReserved(false);
-                book.setImageIcon(readPhoto(rs.getString("path")));
-                book.setImagePath(rs.getString("path"));
-                switch (rs.getString("state")) {
-                    case "rented" -> book.setRented(true);
-                    case "reserved" -> book.setRented(false);
-                }
+                Book book = getBooksInfo(rs);
                 System.out.println(book);
                 books.add(book);
             }
@@ -60,10 +46,9 @@ public class BookDAO {
         return books;
     }
 
-
     public ArrayList<Book> getFavouriteBooks(String userEmail) {
         ArrayList<Book> books = new ArrayList<>();
-        String sql = "SELECT U.user_ID, U.name, U.surname, U.email, B.book_ID, B.state, BT.title, BT.author " +
+        String sql = "SELECT BT.*, B.book_ID, B.state " +
                 "FROM " +
                 "Favourites F " +
                 "JOIN " +
@@ -71,26 +56,40 @@ public class BookDAO {
                 "JOIN " +
                 "Book B ON B.FK_book_template_ID = BT.book_template_ID " +
                 "JOIN " +
-                "User U ON F.FK_user_ID = U.user_ID" +
-                " WHERE U.email = '  " + userEmail + "'";
-
+                "User U ON F.FK_user_ID = U.user_ID " +
+                "WHERE U.email = '" + userEmail + "'";
+        System.out.println(sql);
         ResultSet rs = conn.selectQuery(sql);
 
         try {
             while (rs.next()) {
-                Book book = new Book();
-                book.setBookId(rs.getInt("book_ID"));
-                book.setAuthor(rs.getString("author"));
-                book.setTitle(rs.getString("title"));
-                book.setDescription(rs.getString("description"));
-                book.setGenre(rs.getString("genre"));
+                Book book = getBooksInfo(rs);
                 books.add(book);
             }
 
         } catch (SQLException throwables) {
-            throwables.getSQLState();
+            System.out.println("Error getting the favourite books " + throwables.getSQLState());
         }
         return books;
+    }
+
+    private Book getBooksInfo(ResultSet rs) throws SQLException {
+        Book book = new Book();
+        book.setBookId(rs.getInt("book_ID"));
+        book.setAuthor(rs.getString("author"));
+        book.setTitle(rs.getString("title"));
+        book.setDescription(rs.getString("description"));
+        book.setGenre(rs.getString("genre"));
+        book.setFavourite(true);
+        book.setRented(false);
+        book.setReserved(false);
+        book.setImageIcon(readPhoto(rs.getString("path")));
+        book.setImagePath(rs.getString("path"));
+        switch (rs.getString("state")) {
+            case "rented" -> book.setRented(true);
+            case "reserved" -> book.setReserved(true);
+        }
+        return book;
     }
 
     public ArrayList<Book> getRentedBooks(String userEmail) {
@@ -105,7 +104,6 @@ public class BookDAO {
                 "JOIN " +
                 "User U ON R.FK_user_ID = U.user_ID " +
                 "WHERE U.email = '" + userEmail + "'";
-
 
         ResultSet rs = conn.selectQuery(sql);
 
@@ -141,17 +139,12 @@ public class BookDAO {
 
         try {
             while (rs.next()) {
-                Book book = new Book();
-                book.setBookId(rs.getInt("bookId"));
-                book.setAuthor(rs.getString("author"));
-                book.setTitle(rs.getString("title"));
-                book.setDescription(rs.getString("description"));
-                book.setGenre(rs.getString("genre"));
+                Book book = getBooksInfo(rs);
                 books.add(book);
             }
 
         } catch (SQLException throwables) {
-            throwables.getSQLState();
+            System.out.println("Error getting the reserved books " + throwables.getSQLState());
         }
         return books;
     }
@@ -190,16 +183,44 @@ public class BookDAO {
         return false;
     }
 
+
     public boolean addBook(Book book) {
-        //TODO UPDATE QUERY
-        String sql = "UPDATE ";
-        return conn.updateQuery(sql);
+
+        String insertBookTemplateSQL = "INSERT INTO BookTemplate (title, author, description, genre, path) VALUES ( "
+                +"'"+ book.getTitle() + "','" + book.getAuthor() + "','" + book.getDescription() + "','" + book.getGenre() + "','BookPhotos/default.jpg')";
+
+        System.out.println(insertBookTemplateSQL);
+        try {
+            conn.insertQuery(insertBookTemplateSQL);
+
+            String getBookTemplateIdSQL = "SELECT book_template_ID FROM BookTemplate WHERE title = '"
+                    + book.getTitle() + "' AND author = '" + book.getAuthor() + "';";
+            System.out.println(getBookTemplateIdSQL);
+            ResultSet rs = conn.selectQuery(getBookTemplateIdSQL);
+
+            if (rs.next()) {
+                int bookTemplateId = rs.getInt("book_template_ID");
+
+                String insertBookSQL = "INSERT INTO Book (FK_book_template_ID, state) VALUES ( " + bookTemplateId + ", 'available');";
+                System.out.println(insertBookSQL);
+                conn.insertQuery(insertBookSQL);
+
+                return true;
+            } else {
+                System.out.println("No result found for BookTemplate ID");
+                return false;
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error inserting book template " + e.getMessage());
+            return false;
+        }
     }
 
-    public ImageIcon readPhoto (String path){
-       BufferedImage profileImageBuf = null;
-       path = "BookPhotos/1984.jpg";
-        if(path != null) {
+    public ImageIcon readPhoto(String path) {
+        BufferedImage profileImageBuf = null;
+        path = "BookPhotos/1984.jpg";
+        if (path != null) {
             try {
                 profileImageBuf = ImageIO.read(new File(path));
                 ImageIcon profileImage = new ImageIcon(profileImageBuf);
@@ -208,8 +229,7 @@ public class BookDAO {
                 System.out.println("No image was found\n");
                 return null;
             }
-        }
-        else{
+        } else {
             System.out.println("No image was found\n");
             return null;
         }

@@ -1,53 +1,44 @@
 package ui;
 
+import Controllers.BookController;
 import Model.Book;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import java.awt.Color;
-import java.awt.Dimension;
-
-import javax.swing.ImageIcon;
-import javax.swing.AbstractAction;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import javax.swing.Action;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-import javax.swing.JSeparator;
-import java.awt.Font;
-import java.awt.Image;
-
-import javax.swing.SwingConstants;
 
 public class BookView extends JFrame {
-
-    private JPanel contentPane;
     private Book book;
+    private JPanel contentPane;
     private JButton btReserved;
+    private JButton btFavourites;
+    private JButton btClose;
 
 
     /**
      * Create the frame.
      */
-    public BookView(Book book) {
-        this.book = book;
+    public BookView() {
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 493, 433);
         contentPane = new JPanel();
         contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        btReserved = new JButton("");
+        btFavourites = new JButton("");
 
+    }
+
+    public void setBook(Book book) {
         setUndecorated(true);
 
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JButton btClose = new JButton("");
+        btClose = new JButton("");
         btClose.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();
@@ -58,17 +49,16 @@ public class BookView extends JFrame {
         btClose.setBackground(Color.WHITE);
         btClose.setBounds(453, 10, 30, 23);
         contentPane.add(btClose);
-
+        this.book = book;
         JLabel lblImg = new JLabel("");
         lblImg.setBounds(28, 35, 109, 129);
-        ImageIcon imageIcon = new ImageIcon(BookView.class.getResource(this.book.getImagePath()));
+        ImageIcon imageIcon = book.getImageIcon();
         lblImg.setIcon(imageIcon);
         Dimension labelSize = lblImg.getPreferredSize();
         Image image = imageIcon.getImage().getScaledInstance(labelSize.width, labelSize.height, Image.SCALE_SMOOTH);
         ImageIcon adjustedImageIcon = new ImageIcon(image);
         lblImg.setIcon(adjustedImageIcon);
         contentPane.add(lblImg);
-
         JLabel lblTitle = new JLabel(this.book.getTitle());
         lblTitle.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 14));
         lblTitle.setBounds(187, 35, 91, 23);
@@ -91,18 +81,14 @@ public class BookView extends JFrame {
         taDescription.setBounds(28, 188, 442, 110);
         contentPane.add(taDescription);
 
-        btReserved = new JButton("");
+
         btReserved.setActionCommand("btReserved");
-        if(this.book.isRented()) {
+        if (this.book.isRented()) {
             btReserved.setEnabled(false);
         }
-        btReserved.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
+        btReserved.setActionCommand("btReserved");
         btReserved.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 11));
-        if(this.book.isRented()) {
+        if (this.book.isRented()) {
             btReserved.setIcon(new ImageIcon(BookView.class.getResource("/img/x-red.png")));
             btReserved.setText("Book is not available");
         } else {
@@ -113,26 +99,9 @@ public class BookView extends JFrame {
         btReserved.setBounds(63, 339, 298, 21);
         contentPane.add(btReserved);
 
-        JButton btFavourites = new JButton("");
-        btFavourites.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if(book.isFavourite()) {
-                    book.setFavourite(false);
-                    //TO DO
-                    //save info into database
-                    btFavourites.setIcon(new ImageIcon(BookView.class.getResource("/img/heart-empty.png")));
-                    btFavourites.setText("Add to favourites");
-                }else {
-                    book.setFavourite(true);
-                    //TO DO
-                    //save info into database
-                    btFavourites.setIcon(new ImageIcon(BookView.class.getResource("/img/heart-red.png")));
-                    btFavourites.setText("Remove from favourites");
-                }
-            }
-        });
+        btFavourites.setActionCommand("favBook");
         btFavourites.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 11));
-        if(this.book.isFavourite()) {
+        if (this.book.isFavourite()) {
             btFavourites.setIcon(new ImageIcon(BookView.class.getResource("/img/heart-red.png")));
             btFavourites.setText("Remove from favourites");
         } else {
@@ -165,7 +134,7 @@ public class BookView extends JFrame {
     }
 
     public void changeRented(Book book) {
-        if(!book.isRented()) {
+        if (!book.isRented()) {
             book.setRented(true);
             //TO DO
             //save info into database
@@ -173,5 +142,31 @@ public class BookView extends JFrame {
             btReserved.setText("Book is not available");
             btReserved.setEnabled(false);
         }
+    }
+
+    public void changeFavourite(Book book) {
+        if (book.isFavourite()) {
+            book.setFavourite(false);
+            //TO DO
+            //save info into database
+            btFavourites.setIcon(new ImageIcon(BookView.class.getResource("/img/heart-empty.png")));
+            btFavourites.setText("Add to favourites");
+        } else {
+            book.setFavourite(true);
+            //TO DO
+            //save info into database
+            btFavourites.setIcon(new ImageIcon(BookView.class.getResource("/img/heart-red.png")));
+            btFavourites.setText("Remove from favourites");
+        }
+    }
+
+
+    public void setControllers(BookController bookController) {
+        btReserved.addActionListener(bookController);
+        btFavourites.addActionListener(bookController);
+    }
+
+    public void displayView(boolean b) {
+        this.setVisible(b);
     }
 }

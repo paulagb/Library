@@ -1,6 +1,8 @@
 package Controllers;
 
+import Model.Book;
 import Model.User;
+import ui.BookView;
 
 public class MasterController {
 
@@ -8,15 +10,19 @@ public class MasterController {
     private CreateProfileController createProfileController;
     private MainPageCustomerController mainPageCustomerController;
     private FavouriteController favouriteController;
-    private RentedBookController rentedBookController;
+    private RentedBooksController rentedBooksController;
+    private AdminController adminController;
+    private BookController bookController;
 
 
-    public MasterController(LoginController loginController, CreateProfileController createProfileController, MainPageCustomerController mainPageCustomerController, FavouriteController favouriteController, RentedBookController rentedBookController) {
+    public MasterController(LoginController loginController, CreateProfileController createProfileController, MainPageCustomerController mainPageCustomerController, FavouriteController favouriteController, RentedBooksController rentedBooksController, AdminController mainAdminController, BookController bookView) {
         this.loginController = loginController;
         this.createProfileController = createProfileController;
         this.mainPageCustomerController = mainPageCustomerController;
-        this.rentedBookController = rentedBookController;
+        this.rentedBooksController = rentedBooksController;
         this.favouriteController = favouriteController;
+        this.adminController = mainAdminController;
+        this.bookController = bookView;
     }
 
     public void okLoginCustomer(User user) {
@@ -36,20 +42,19 @@ public class MasterController {
         loginController.displayView(true);
     }
 
-    public void okLoginAdmin() {
-        // main page admin
-    }
+
 
     public void login() {
         createProfileController.displayView(false);
         loginController.displayView(true);
     }
 
-    public void profile(String from) {
+    public void profile(String from, User user) {
         //TODO REFRESH MAIN PAGE, WITH BOOKS
         if (from.equals("fav")) {
             favouriteController.displayView(false);
-            mainPageCustomerController.displayView(true);
+            rentedBooksController.setRentedBooks(user);
+            rentedBooksController.displayView(true);
         }
 
     }
@@ -60,14 +65,52 @@ public class MasterController {
         favouriteController.displayView(true);
     }
 
-    public void rentedBooks(String userEmail) {
+    public void rentedBooks(User user) {
         mainPageCustomerController.displayView(false);
-        rentedBookController.setRentedBooks(userEmail);
-        rentedBookController.displayView(true);
+        rentedBooksController.setRentedBooks(user);
+        rentedBooksController.displayView(true);
     }
 
-    public void notification() {
-        mainPageCustomerController.displayView(false);
-        //TODO SET NOTIFICATION VIEW VISIBLE
+    public void okLoginAdmin(User user) {
+        loginController.displayView(false);
+        adminController.getBooks(user);
+        adminController.displayView(true);
+    }
+    public void addBook() {
+        adminController.displayAddBookview(true);
+    }
+
+    public void bookAdded() {
+        //TODO REFRESH BOOKS
+        adminController.displaybookAddedview(false);
+        adminController.displayAddBookview(false);
+        adminController.displayView(true);
+    }
+
+    public void setControllers(MainPageCustomerController mainPageCustomerController, FavouriteController favouriteController, RentedBooksController rentedBooksController, AdminController adminController) {
+        this.mainPageCustomerController = mainPageCustomerController;
+        this.favouriteController = favouriteController;
+        this.rentedBooksController = rentedBooksController;
+        this.adminController = adminController;
+    }
+
+    public void adminUsers() {
+        adminController.displayView(false);
+        adminController.displayUsersView(true);
+    }
+
+    public void discardAddBook() {
+        adminController.displayAddBookview(false);
+        adminController.displayView(true);
+    }
+
+    public void favourites(User user) {
+        rentedBooksController.displayView(false);
+        favouriteController.setFavBooks(user.getEmail());
+        favouriteController.displayView(true);
+    }
+
+    public void showBook(Book book) {
+              bookController.showBook(book);
     }
 }

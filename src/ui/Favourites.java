@@ -17,7 +17,9 @@ public class Favourites extends JFrame {
     private JButton btProfile;
     private JButton btNotification;
     private JButton btFavorites;
+    private JPanel pnBooks;
     private ArrayList<Book> favBooks;
+
 
 
     /**
@@ -136,27 +138,11 @@ public class Favourites extends JFrame {
         spBooks.setBounds(152, 200, 653, 311);
         contentPane.add(spBooks);
 
-        JPanel pnBooks = new JPanel();
+        pnBooks = new JPanel();
         pnBooks.setBackground(new Color(255, 255, 255));
         spBooks.setViewportView(pnBooks);
 
-        //TO DO
-        //Method to access to favourites
-        /*
-        PanelBook element;
-        for(int i = 0; i < library.getNumberOfFavourites();i++) {
-            element = new PanelBook(library.getAllFavourites()[i]);
-            element.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    //TO DO
-                    //show BookView
-                }
-            });
-            pnBooks.add(element);
-        }
 
-         */
     }
 
     public void setControllers(FavouriteController favController) {
@@ -168,5 +154,19 @@ public class Favourites extends JFrame {
 
     public void setFavBooks(ArrayList<Book> books) {
         favBooks = books;
+        PanelBook element;
+        for (Book book : favBooks) {
+            element = new PanelBook(book);
+            element.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    //TO DO
+                    //show BookView
+                }
+            });
+            pnBooks.add(element);
+        }
+
+
     }
 }

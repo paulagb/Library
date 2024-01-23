@@ -12,10 +12,10 @@ import java.util.List;
 
 public class Library {
     private final UserDAO userDAO;
-    private MasterController masterController;
-    private User user;
     private final BookDAO bookDAO;
     private final SearchDAO searchDAO;
+    private User user;
+    private MasterController masterController;
 
     public Library() {
         userDAO = new UserDAO();
@@ -36,20 +36,40 @@ public class Library {
                 if (user.getUserType().equals("user")) {
                     masterController.okLoginCustomer(user);
                 } else {
-                    masterController.okLoginAdmin();
+                    masterController.okLoginAdmin(user);
+
                 }
                 break;
             case "login":
                 masterController.login();
                 break;
             case "profileFromFav":
-                masterController.profile("fav");
+                masterController.profile("fav", user);
+                break;
+            case "favFromProfile":
+                masterController.favourites(user);
                 break;
             case "favourites":
                 masterController.favBooks(user.getEmail());
                 break;
+            case "addBook":
+                masterController.addBook();
+                break;
+            case "bookAdded":
+                masterController.bookAdded();
+                break;
+            case "adminUsers":
+                masterController.adminUsers();
+                break;
+            case "discardAddBook":
+                masterController.discardAddBook();
+                break;
+            case "searchFromProfile":
+                //masterController.searchFromProfile(user);
+                break;
         }
     }
+
 
     public boolean checkCredentials(String username, String password) {
         user = userDAO.checkCredentials(username, password);
@@ -64,24 +84,28 @@ public class Library {
         return userDAO.createProfile(username, "surname", "user", email, password);
     }
 
-    public List<Book> listFavouriteBooks (String userEmail){
+    public List<Book> listFavouriteBooks(String userEmail) {
         return bookDAO.getFavouriteBooks(userEmail);
     }
-    public List<Book> listRentedBooks (String userEmail){
+
+    public List<Book> listRentedBooks(String userEmail) {
         return bookDAO.getRentedBooks(userEmail);
     }
-    public List<Book> listReservedBooks  (String userEmail){
+
+    public List<Book> listReservedBooks(String userEmail) {
         return bookDAO.getReservedBooks(userEmail);
     }
 
 
-
-    public boolean addBook(Book book){
+    public boolean addBook(Book book) {
+        book.setReserved(false);
+        book.setRented(false);
+        book.setFavourite(false);
         return bookDAO.addBook(book);
     }
 
     //TODO
-    public boolean rentBook (Book book){
+    public boolean rentBook(Book book) {
         return bookDAO.rentBook(book);
     }
 
@@ -92,6 +116,10 @@ public class Library {
     //TODO DELETE, THIS IS JUST FOR TEST
     public void setUSer(User user) {
         this.user = user;
+    }
+
+    public void showBook(Book book) {
+        masterController.showBook(book);
     }
 }
 

@@ -22,7 +22,6 @@ public class FavouriteController implements ActionListener {
 
     public void setFavBooks(String userEmail) {
         BookDAO bookDAO = new BookDAO();
-        //ArrayList<Book> favBooks = bookDAO.getFavouriteBooks(userEmail);
         ArrayList<Book> books = bookDAO.getFavouriteBooks(userEmail);
         System.out.println("---FAV BOOKS");
         for (Book b : books) {

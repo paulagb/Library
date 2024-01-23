@@ -1,5 +1,7 @@
 package ui;
 
+import Controllers.AdminController;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -15,6 +17,7 @@ import java.awt.event.ActionEvent;
 public class BookAdded extends JFrame {
 
     private JPanel contentPane;
+    private JButton btBack;
 
     /**
      * Create the frame.
@@ -35,16 +38,20 @@ public class BookAdded extends JFrame {
         lblAdded.setBounds(133, 59, 250, 31);
         contentPane.add(lblAdded);
 
-        JButton btBack = new JButton("Back to main page");
-        btBack.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // to do
-                //go to main page
-            }
-        });
+        btBack = new JButton("Back to main page");
+        btBack.setActionCommand("btBack");
         btBack.setBackground(new Color(50, 205, 50));
         btBack.setForeground(new Color(255, 255, 255));
         btBack.setBounds(178, 112, 153, 21);
         contentPane.add(btBack);
+    }
+
+    public void setControllers(AdminController mainAdminController) {
+        btBack.addActionListener(mainAdminController);
+
+    }
+
+    public void showView(boolean b) {
+        setVisible(b);
     }
 }
