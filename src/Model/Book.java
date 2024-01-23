@@ -1,5 +1,7 @@
 package Model;
 
+import javax.swing.*;
+
 public class Book {
     private int bookId;
     private String title;
@@ -9,11 +11,11 @@ public class Book {
     private boolean isFavourite;
     private boolean isRented;
     private boolean isReserved;
-
+    private ImageIcon imageIcon;
     private String imagePath;
 
 
-    public Book(int bookId, String title, String author, String description, String genre, boolean isFavourite, boolean isRented, boolean isReserved, String imagePath) {
+    public Book(int bookId, String title, String author, String description, String genre, boolean isFavourite, boolean isRented, boolean isReserved, ImageIcon imageIcon, String imagePath) {
         this.bookId = bookId;
         this.title = title;
         this.author = author;
@@ -22,6 +24,7 @@ public class Book {
         this.isFavourite = isFavourite;
         this.isRented = isRented;
         this.isReserved = isReserved;
+        this.imageIcon = imageIcon;
         this.imagePath = imagePath;
     }
 
@@ -93,8 +96,22 @@ public class Book {
         isReserved = reserved;
     }
 
-    public String getImagePath(){return imagePath;}
+    public ImageIcon getImageIcon() {
+        return imageIcon;
+    }
 
+    public void setImageIcon(ImageIcon imageIcon) {
+        this.imageIcon = imageIcon;
+    }
+    public ImageIcon getImageCon(){return imageIcon;}
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
 
     //TO DO: methods to get dates
     public String getRentedDate(){return "";}

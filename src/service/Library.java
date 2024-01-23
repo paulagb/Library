@@ -42,17 +42,12 @@ public class Library {
             case "login":
                 masterController.login();
                 break;
-            case "profile":
-                masterController.profile();
+            case "profileFromFav":
+                masterController.profile("fav");
                 break;
             case "favourites":
                 masterController.favBooks(user.getEmail());
                 break;
-            case "notification":
-                masterController.notification();
-                break;
-
-
         }
     }
 
@@ -92,6 +87,11 @@ public class Library {
 
     public ArrayList<Book> search(String search) {
         return searchDAO.searchByAuthorOrTitle(user, search);
+    }
+
+    //TODO DELETE, THIS IS JUST FOR TEST
+    public void setUSer(User user) {
+        this.user = user;
     }
 }
 

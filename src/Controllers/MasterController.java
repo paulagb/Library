@@ -20,6 +20,7 @@ public class MasterController {
     }
 
     public void okLoginCustomer(User user) {
+        System.out.println("OKALOGIN");
         loginController.displayView(false);
         mainPageCustomerController.getBooks(user);
         mainPageCustomerController.displayView(true);
@@ -44,9 +45,13 @@ public class MasterController {
         loginController.displayView(true);
     }
 
-    public void profile() {
+    public void profile(String from) {
         //TODO REFRESH MAIN PAGE, WITH BOOKS
-        mainPageCustomerController.displayView(true);
+        if (from.equals("fav")) {
+            favouriteController.displayView(false);
+            mainPageCustomerController.displayView(true);
+        }
+
     }
 
     public void favBooks(String userEmail) {

@@ -141,4 +141,7 @@ public class MainAdmin extends JFrame {
 
          */
     }
+    public void showView(boolean b) {
+        setVisible(b);
+    }
 }

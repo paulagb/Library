@@ -1,29 +1,18 @@
 package ui;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSeparator;
-import javax.swing.JTextArea;
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-import java.awt.SystemColor;
-
 public class AddBook extends JFrame {
 
     private JPanel contentPane;
+    private JButton btAdd;
+    private JButton btDiscard;
+    private JButton btImage;
 
 
     /**
@@ -81,40 +70,26 @@ public class AddBook extends JFrame {
         separator_1_2.setBounds(187, 151, 70, 2);
         contentPane.add(separator_1_2);
 
-        JButton btAdd = new JButton("Add");
-        btAdd.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //TO DO
-                //save info into database
-                //show BookAdded
-                dispose();
-            }
-        });
+        btAdd = new JButton("Add");
+        btAdd.setActionCommand("btAdd");
         btAdd.setForeground(new Color(255, 255, 255));
         btAdd.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 13));
         btAdd.setBackground(new Color(50, 205, 50));
         btAdd.setBounds(107, 336, 122, 27);
         contentPane.add(btAdd);
 
-        JButton btDiscard = new JButton("Discard");
-        btDiscard.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dispose();
-            }
-        });
+        btDiscard = new JButton("Discard");
+        btDiscard.setActionCommand("btDiscard");
+
         btDiscard.setForeground(new Color(255, 255, 255));
         btDiscard.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 13));
         btDiscard.setBackground(new Color(255, 0, 0));
         btDiscard.setBounds(250, 336, 122, 27);
         contentPane.add(btDiscard);
 
-        JButton btImage = new JButton("+");
-        btImage.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //TO DO
-                //upload photo
-            }
-        });
+        btImage = new JButton("+");
+        btImage.setActionCommand("btImage");
+
         btImage.setFont(new Font("Tahoma", Font.PLAIN, 19));
         btImage.setBounds(28, 39, 132, 125);
         contentPane.add(btImage);
@@ -192,4 +167,16 @@ public class AddBook extends JFrame {
         });
         contentPane.add(taGenre);
     }
+
+    public void setControllers(ActionListener listener) {
+        btAdd.addActionListener(listener);
+        btDiscard.addActionListener(listener);
+        btImage.addActionListener(listener);
+    }
+
+    public void showView(boolean state) {
+        setVisible(state);
+
+    }
+
 }

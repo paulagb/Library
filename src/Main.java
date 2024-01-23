@@ -1,4 +1,6 @@
 import Controllers.*;
+import Database.DAO.UserDAO;
+import Model.User;
 import ui.*;
 import service.Library;
 
@@ -42,8 +44,13 @@ public class Main {
                 logic.setMasterController(masterController);
 
 
-                loginView.setVisible(true);
-                //mainPageCustomerController.showBooks();
+                //loginView.setVisible(true);
+
+                //TODO DELETE, THIS IS JUST FOR TEST
+                UserDAO userDAO = new UserDAO();
+                User user = userDAO.checkCredentials("john@example.com", "password1");
+                logic.setUSer(user);
+                logic.changeView("mainPage");
 
                // logic.listRentedBooks("john@example.com");
 

@@ -28,6 +28,7 @@ public class BookView extends JFrame {
 
     private JPanel contentPane;
     private Book book;
+    private JButton btReserved;
 
 
     /**
@@ -90,20 +91,14 @@ public class BookView extends JFrame {
         taDescription.setBounds(28, 188, 442, 110);
         contentPane.add(taDescription);
 
-        JButton btReserved = new JButton("");
+        btReserved = new JButton("");
+        btReserved.setActionCommand("btReserved");
         if(this.book.isRented()) {
             btReserved.setEnabled(false);
         }
         btReserved.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                if(!book.isRented()) {
-                    book.setRented(true);
-                    //TO DO
-                    //save info into database
-                    btReserved.setIcon(new ImageIcon(BookView.class.getResource("/img/x-red.png")));
-                    btReserved.setText("Book is not available");
-                    btReserved.setEnabled(false);
-                }
+
             }
         });
         btReserved.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 11));
@@ -167,5 +162,16 @@ public class BookView extends JFrame {
         separator_1_2.setBackground(new Color(211, 211, 211));
         separator_1_2.setBounds(187, 151, 70, 2);
         contentPane.add(separator_1_2);
+    }
+
+    public void changeRented(Book book) {
+        if(!book.isRented()) {
+            book.setRented(true);
+            //TO DO
+            //save info into database
+            btReserved.setIcon(new ImageIcon(BookView.class.getResource("/img/x-red.png")));
+            btReserved.setText("Book is not available");
+            btReserved.setEnabled(false);
+        }
     }
 }

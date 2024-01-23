@@ -81,11 +81,7 @@ public class Favourites extends JFrame {
         tfSearch.setColumns(10);
 
         btSearch = new JButton("");
-        btSearch.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //search in books list
-            }
-        });
+        btSearch.setActionCommand("btSearch");
         btSearch.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/magnifying-glass.png")));
         btSearch.setForeground(new Color(255, 255, 255));
         btSearch.setBackground(new Color(218, 165, 32));
@@ -93,27 +89,27 @@ public class Favourites extends JFrame {
         pnBar.add(btSearch);
 
         btProfile = new JButton("");
-        btProfile.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //show rented books
-            }
-        });
+        btProfile.setActionCommand("btProfile");
         btProfile.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/user.png")));
         btProfile.setBackground(new Color(70, 130, 180));
         btProfile.setForeground(new Color(0, 0, 0));
         btProfile.setBounds(888, -3, 66, 59);
         pnBar.add(btProfile);
 
+        btNotification = new JButton("");
+        btNotification.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/bell.png")));
+        btNotification.setForeground(Color.BLACK);
+        btNotification.setBackground(new Color(70, 130, 180));
+        btNotification.setBounds(826, -2, 66, 59);
+        pnBar.add(btNotification);
+
         btFavorites = new JButton("");
-        btFavorites.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                //show favorites
-            }
-        });
+
         btFavorites.setIcon(new ImageIcon(MainCustomer.class.getResource("/img/heart.png")));
+        btFavorites.setActionCommand("btFav");
         btFavorites.setForeground(Color.BLACK);
         btFavorites.setBackground(new Color(70, 130, 180));
-        btFavorites.setBounds(819, -3, 59, 59);
+        btFavorites.setBounds(768, -2, 59, 59);
         pnBar.add(btFavorites);
 
         JPanel pnTitle = new JPanel();

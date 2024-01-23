@@ -26,10 +26,11 @@ public class PanelBook extends JPanel {
         setLayout(new GridLayout(0, 2, 0, 0));
 
         JLabel lblImgBook = new JLabel("");
-        ImageIcon imageIcon = new ImageIcon(BookView.class.getResource(this.book.getImagePath()));
+        ImageIcon imageIcon = book.getImageIcon();
         lblImgBook.setIcon(imageIcon);
         Dimension labelSize = lblImgBook.getPreferredSize();
-        Image image = imageIcon.getImage().getScaledInstance(labelSize.width, labelSize.height, Image.SCALE_SMOOTH);
+        //TODO CHECK SIZES, HE PUESTO 100, 150 ERA MUY GRANDE SI NO
+        Image image = imageIcon.getImage().getScaledInstance(100, 150, Image.SCALE_SMOOTH);
         ImageIcon adjustedImageIcon = new ImageIcon(image);
         lblImgBook.setIcon(adjustedImageIcon);
         add(lblImgBook);
@@ -38,6 +39,7 @@ public class PanelBook extends JPanel {
         pnInfo.setBackground(new Color(255, 255, 255));
         add(pnInfo);
         pnInfo.setLayout(new GridLayout(3, 0, 0, 0));
+
 
         tfTitle = new JTextField();
         tfTitle.setText(this.book.getTitle());

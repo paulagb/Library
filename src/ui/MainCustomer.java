@@ -21,7 +21,7 @@ public class MainCustomer extends JFrame {
     private JButton btSearch;
     private JButton btProfile;
     private JButton btFavorites;
-
+    private JPanel pnBooks;
 
     /**
      * Create the frame.
@@ -123,15 +123,15 @@ public class MainCustomer extends JFrame {
         spBooks.setBounds(152, 200, 653, 311);
         contentPane.add(spBooks);
 
-        JPanel pnBooks = new JPanel();
+        pnBooks = new JPanel();
         pnBooks.setBackground(new Color(255, 255, 255));
         spBooks.setViewportView(pnBooks);
         pnBooks.setLayout(new GridLayout(0, 1, 0, 0));
 
         //TO DO
         //CHANGE METHOD TO ACCESS BOOKS
-        /*
-        PanelBook element;
+
+       /* PanelBook element;
         for(int i = 0; i < library.getNumberOfBooks(); i++) {
             element = new PanelBook(library.getAllBooks()[i]);
             element.addMouseListener(new MouseAdapter() {
@@ -141,16 +141,23 @@ public class MainCustomer extends JFrame {
                 }
             });
             pnBooks.add(element);
-        }
+        }*/
 
-         */
+
     }
 
     public void setBooks(ArrayList<Book> books) {
         this.books = books;
-       /* for (Book book : books) {
-            System.out.println(book.getBookId() + book.getAuthor() + book.getDescription() + book.getGenre() + book.isReserved() + book.isRented() + book.isFavourite()  );
-        }*/
+        for (Book book : books) {
+            PanelBook element = new PanelBook(book);
+            element.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    //show BookView
+                }
+            });
+            pnBooks.add(element);
+        }
     }
 
     public void showView(boolean state) {

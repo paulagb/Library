@@ -4,6 +4,11 @@ import Database.ConnectionDB;
 import Model.Book;
 import Model.User;
 
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,15 +44,18 @@ public class BookDAO {
                 book.setFavourite(rs.getBoolean("is_favorite"));
                 book.setRented(false);
                 book.setReserved(false);
+                book.setImageIcon(readPhoto(rs.getString("path")));
+                book.setImagePath(rs.getString("path"));
                 switch (rs.getString("state")) {
                     case "rented" -> book.setRented(true);
                     case "reserved" -> book.setRented(false);
                 }
+                System.out.println(book);
                 books.add(book);
             }
 
         } catch (SQLException throwables) {
-            throwables.getSQLState();
+            System.out.println("Error getting the books " + throwables.getSQLState());
         }
         return books;
     }
@@ -186,5 +194,24 @@ public class BookDAO {
         //TODO UPDATE QUERY
         String sql = "UPDATE ";
         return conn.updateQuery(sql);
+    }
+
+    public ImageIcon readPhoto (String path){
+       BufferedImage profileImageBuf = null;
+       path = "BookPhotos/1984.jpg";
+        if(path != null) {
+            try {
+                profileImageBuf = ImageIO.read(new File(path));
+                ImageIcon profileImage = new ImageIcon(profileImageBuf);
+                return profileImage;
+            } catch (IOException e) {
+                System.out.println("No image was found\n");
+                return null;
+            }
+        }
+        else{
+            System.out.println("No image was found\n");
+            return null;
+        }
     }
 }

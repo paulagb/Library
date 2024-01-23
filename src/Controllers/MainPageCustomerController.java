@@ -23,6 +23,7 @@ public class MainPageCustomerController implements ActionListener {
         ArrayList<Book> books = new ArrayList<>();
         BookDAO bookDAO = new BookDAO();
         books = (ArrayList<Book>) bookDAO.getBooks(user.getUserID());
+
         mainCustomerView.setBooks(books);
     }
 

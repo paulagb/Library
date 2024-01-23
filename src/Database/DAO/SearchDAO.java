@@ -18,15 +18,14 @@ public class SearchDAO {
     public ArrayList<Book> searchByAuthorOrTitle(User user, String search) {
         ArrayList<Book> books = new ArrayList<>();
         String sql = "SELECT BookTemplate.*, Book.*, Favourites.FK_user_id AS user_id," +
-                " CASE WHEN Favourites.FK_user_id IS NOT NULL THEN 1 ELSE 0 END as is_favourite" +
-                "FROM BookTemplate" +
-                "JOIN " +
-                "Book ON BookTemplate.book_template_ID = Book.FK_book_template_ID" +
-                "LEFT JOIN " +
-                "Favourites ON Favourites.FK_book_template_ID = BookTemplate.book_template_ID " +
+                " CASE WHEN Favourites.FK_user_id IS NOT NULL THEN 1 ELSE 0 END as is_favourite " +
+                "FROM BookTemplate " +
+                "JOIN Book ON BookTemplate.book_template_ID = Book.FK_book_template_ID " +
+                "LEFT JOIN Favourites ON Favourites.FK_book_template_ID = BookTemplate.book_template_ID " +
                 "AND Favourites.FK_user_id = " + user.getUserID() +
-                "WHERE BookTemplate.title LIKE '%" + search + "%' " +
+                " WHERE BookTemplate.title LIKE '%" + search + "%' " +
                 "OR BookTemplate.author LIKE '%" + search + "%';";
+
 
         ResultSet rs = conn.selectQuery(sql);
 
@@ -50,7 +49,7 @@ public class SearchDAO {
             }
 
         } catch (SQLException throwables) {
-            throwables.getSQLState();
+            System.out.println(throwables.getSQLState());
         }
 
         return books;

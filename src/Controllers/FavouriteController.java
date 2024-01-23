@@ -23,20 +23,18 @@ public class FavouriteController implements ActionListener {
     public void setFavBooks(String userEmail) {
         BookDAO bookDAO = new BookDAO();
         //ArrayList<Book> favBooks = bookDAO.getFavouriteBooks(userEmail);
-        ArrayList<Book> books = bookDAO.getReservedBooks(userEmail);
-        System.out.println("---RESERVED BOOKS");
-        for (Book b: books
-             ) {
+        ArrayList<Book> books = bookDAO.getFavouriteBooks(userEmail);
+        System.out.println("---FAV BOOKS");
+        for (Book b : books) {
             System.out.println(b.getBookId() + " " + b.getTitle() + " " + b.getAuthor());
-
         }
         favView.setFavBooks(books);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        switch (e.getActionCommand()){
-            case "btProfile" -> logic.changeView("profile");
+        switch (e.getActionCommand()) {
+            case "btProfile" -> logic.changeView("profileFromFav");
             case "btSearch" -> {
                 System.out.println("searching");
                 //TODO descomentar
