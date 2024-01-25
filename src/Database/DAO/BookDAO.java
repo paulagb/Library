@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class BookDAO {
 
     public ArrayList<Book> getFavouriteBooks(String userEmail) {
         ArrayList<Book> books = new ArrayList<>();
-        String sql = "SELECT BT.*, B.book_ID, B.state " +
+        String sql = "SELECT BT.*, B.* " +
                 "FROM " +
                 "Favourites F " +
                 "JOIN " +
@@ -63,7 +64,23 @@ public class BookDAO {
 
         try {
             while (rs.next()) {
-                Book book = getBooksInfo(rs);
+                Book book = new Book();
+                book.setBookId(rs.getInt("book_ID"));
+                book.setAuthor(rs.getString("author"));
+                book.setTitle(rs.getString("title"));
+                book.setDescription(rs.getString("description"));
+                book.setFavourite(true);
+                book.setRented(false);
+                book.setReserved(false);
+                book.setImagePath(rs.getString("path"));
+                book.setGenre(rs.getString("genre"));
+                book.setImageIcon(readPhoto(rs.getString("path")));
+                book.setBook_template_id(rs.getInt("FK_book_template_ID"));
+
+                switch (rs.getString("state")) {
+                    case "rented" -> book.setRented(true);
+                    case "reserved" -> book.setReserved(true);
+                }
                 books.add(book);
             }
 
@@ -79,12 +96,14 @@ public class BookDAO {
         book.setAuthor(rs.getString("author"));
         book.setTitle(rs.getString("title"));
         book.setDescription(rs.getString("description"));
-        book.setGenre(rs.getString("genre"));
-        book.setFavourite(true);
+        book.setFavourite(false);
         book.setRented(false);
         book.setReserved(false);
-        book.setImageIcon(readPhoto(rs.getString("path")));
         book.setImagePath(rs.getString("path"));
+        book.setGenre(rs.getString("genre"));
+        book.setImageIcon(readPhoto(rs.getString("path")));
+        book.setBook_template_id(rs.getInt("FK_book_template_ID"));
+
         switch (rs.getString("state")) {
             case "rented" -> book.setRented(true);
             case "reserved" -> book.setReserved(true);
@@ -94,7 +113,7 @@ public class BookDAO {
 
     public ArrayList<Book> getRentedBooks(String userEmail) {
         ArrayList<Book> books = new ArrayList<>();
-        String sql = "SELECT B.book_ID, BT.title, BT.author, R.starting_date, R.finish_date " +
+        String sql = "SELECT B.*, BT.* " +
                 "FROM " +
                 "Rent R " +
                 "JOIN " +
@@ -104,29 +123,24 @@ public class BookDAO {
                 "JOIN " +
                 "User U ON R.FK_user_ID = U.user_ID " +
                 "WHERE U.email = '" + userEmail + "'";
-
+        System.out.println(sql);
         ResultSet rs = conn.selectQuery(sql);
 
         try {
             while (rs.next()) {
-                Book book = new Book();
-                book.setBookId(rs.getInt("book_ID"));
-                book.setAuthor(rs.getString("author"));
-                book.setTitle(rs.getString("title"));
-                book.setDescription(rs.getString("description"));
-                book.setGenre(rs.getString("genre"));
+                Book book = getBooksInfo(rs);
                 books.add(book);
             }
 
         } catch (SQLException throwables) {
-            throwables.getSQLState();
+            System.out.println( "Error getting the rented books " + throwables.getSQLState());
         }
         return books;
     }
 
     public ArrayList<Book> getReservedBooks(String userEmail) {
         ArrayList<Book> books = new ArrayList<>();
-        String sql = "SELECT B.book_ID as bookId, B.state,BT.description,BT.genre, BT.title, BT.author, RV.date AS reservation_date FROM " +
+        String sql = "SELECT B.* , BT.* ,  RV.date AS reservation_date FROM " +
                 "Revervation RV " +
                 "JOIN " +
                 "Book B ON RV.FK_book_ID = B.book_ID" +
@@ -149,9 +163,22 @@ public class BookDAO {
         return books;
     }
 
-    public boolean rentBook(Book book) {
+    public boolean rentBook(Book book, int userId) {
         // CHECK BOOK IS NOT RENTED
+        String sqlUpdateBook = "UPDATE Book " +
+                "SET state = 'rented' " +
+                "WHERE " +
+                "FK_book_template_ID = (SELECT book_template_ID FROM BookTemplate WHERE title = '" + book.getTitle() +
+                "' AND author = '" + book.getAuthor() + "')" +
+                "AND book_ID = " + book.getBookId() + ";";
+        System.out.println(sqlUpdateBook);
+        conn.updateQuery(sqlUpdateBook);
 
+
+        String insertToREnt = "INSERT INTO Rental (FK_user_ID, FK_book_ID, starting_date, finish_date)" +
+                "VALUES (" + userId + ", " + book.getBookId() + ", '2023-01-24', '2023-01-30');";
+        System.out.println(insertToREnt);
+        conn.insertQuery(insertToREnt);
         //UPDATE BOOK STATUS
 
         return false;
@@ -164,15 +191,17 @@ public class BookDAO {
 
     public boolean addFavBook(Book book, User user) {
         String sql = "INSERT INTO Favourites (FK_book_template_ID, FK_user_id)" +
-                "VALUES ('" + book.getBookId() + "', '" + user.getUserID() + "')" +
-                "ON DUPLICATE KEY UPDATE FK_book_template_ID = '" + book.getBookId() + "', FK_user_id = '" + user.getUserID() + "';";
+                "VALUES (" + book.getBookId() + ", " + user.getUserID() + ")" +
+                "ON DUPLICATE KEY UPDATE FK_book_template_ID = " + book.getBook_template_id() + ", FK_user_id = " + user.getUserID() + ";";
+        System.out.println(sql);
         return conn.insertQuery(sql);
     }
 
     public boolean removeFavBook(Book book, User user) {
-        String sql = "DELETE FROM Favourites" +
-                "WHERE FK_book_template_ID = '" + book.getBookId() +
-                "' AND FK_user_id = '" + user.getUserID() + "';";
+        String sql = "DELETE FROM Favourites " +
+                "WHERE FK_book_template_ID = " + book.getBook_template_id() +
+                " AND FK_user_id = " + user.getUserID() + ";";
+        System.out.println(sql);
         return conn.deleteQuery(sql);
     }
 
@@ -187,7 +216,7 @@ public class BookDAO {
     public boolean addBook(Book book) {
 
         String insertBookTemplateSQL = "INSERT INTO BookTemplate (title, author, description, genre, path) VALUES ( "
-                +"'"+ book.getTitle() + "','" + book.getAuthor() + "','" + book.getDescription() + "','" + book.getGenre() + "','BookPhotos/default.jpg')";
+                + "'" + book.getTitle() + "','" + book.getAuthor() + "','" + book.getDescription() + "','" + book.getGenre() + "','BookPhotos/default.jpg')";
 
         System.out.println(insertBookTemplateSQL);
         try {
@@ -219,7 +248,6 @@ public class BookDAO {
 
     public ImageIcon readPhoto(String path) {
         BufferedImage profileImageBuf = null;
-        path = "BookPhotos/1984.jpg";
         if (path != null) {
             try {
                 profileImageBuf = ImageIO.read(new File(path));

@@ -1,5 +1,6 @@
 import Controllers.*;
 import Database.DAO.UserDAO;
+import Model.Book;
 import Model.User;
 import service.Library;
 import ui.*;
@@ -30,7 +31,7 @@ public class Main {
                 mainCustomerView.setControllers(mainPageCustomerController);
 
                 //FAVOURITE BOOKS
-                Favourites favouritesView = new Favourites();
+                Favourites favouritesView = new Favourites(logic);
                 FavouriteController favouriteController = new FavouriteController(favouritesView, logic);
                 favouritesView.setControllers(favouriteController);
 
@@ -38,13 +39,6 @@ public class Main {
                 RentedBooks rentedBooksView = new RentedBooks();
                 RentedBooksController rentedBooksController = new RentedBooksController(rentedBooksView, logic);
                 rentedBooksView.setControllers(rentedBooksController);
-
-                //BookView
-                BookView bookView = new BookView();
-                BookController bookController = new BookController(bookView, logic);
-                bookView.setControllers(bookController);
-
-
 
 
                 //-------------------   ADMIN   -------------------//
@@ -64,15 +58,24 @@ public class Main {
                 mainAdminController.setUsersView(usersView);
                 usersView.setControllers(mainAdminController);
 
-                MasterController masterController = new MasterController(loginController, createProfileController, mainPageCustomerController, favouriteController, rentedBooksController, mainAdminController, bookController);
+                MasterController masterController = new MasterController(loginController, createProfileController, mainPageCustomerController, favouriteController, rentedBooksController, mainAdminController);
                 logic.setMasterController(masterController);
-
-                //loginView.setVisible(true);
+                mainCustomerView.setLibrary(logic);
+                loginView.setVisible(true);
 
                 //TODO DELETE, THIS IS JUST FOR TEST
                 UserDAO userDAO = new UserDAO();
-                User user = userDAO.checkCredentials("jane@example.com", "password2");
+                // admin-> jane@example.com, password2
+                // customer-> john@example, password1
+                /*User user = userDAO.checkCredentials("john@example.com", "password1");
+                System.out.println(user.getUserID());
                 logic.setUSer(user);
+                Book book = new Book();
+                book.setBookID(3);
+                book.setBookName("1984");
+                book.setAuthor("George Orwell");*/
+
+                //logic.rentBook(book);
                 logic.changeView("mainPage");
 
                 // logic.listRentedBooks("john@example.com");

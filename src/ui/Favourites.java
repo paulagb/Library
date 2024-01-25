@@ -2,11 +2,15 @@ package ui;
 
 import Controllers.FavouriteController;
 import Model.Book;
+import service.Library;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Favourites extends JFrame {
@@ -19,13 +23,15 @@ public class Favourites extends JFrame {
     private JButton btFavorites;
     private JPanel pnBooks;
     private ArrayList<Book> favBooks;
-
+    private JLabel lblLibrary;
+    private Library logic;
 
 
     /**
      * Create the frame.
      */
-    public Favourites() {
+    public Favourites(Library logic) {
+        this.logic = logic;
         setIconImage(Toolkit.getDefaultToolkit().getImage(MainCustomer.class.getResource("/img/icono.jpg")));
         setTitle("Library\u2122");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,12 +49,11 @@ public class Favourites extends JFrame {
         contentPane.add(pnBar);
         pnBar.setLayout(null);
 
-        JLabel lblLibrary = new JLabel("Library\u2122");
+        lblLibrary = new JLabel("Library\u2122");
         lblLibrary.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //TO DO
-                //go back to MainCustomer
+
             }
         });
         lblLibrary.setForeground(new Color(255, 255, 255));
@@ -145,11 +150,16 @@ public class Favourites extends JFrame {
 
     }
 
+    public void setLogic(Library logic) {
+        this.logic = logic;
+    }
+
     public void setControllers(FavouriteController favController) {
         btFavorites.addActionListener(favController);
         btNotification.addActionListener(favController);
         btProfile.addActionListener(favController);
         btSearch.addActionListener(favController);
+        lblLibrary.addMouseListener(favController);
     }
 
     public void setFavBooks(ArrayList<Book> books) {
@@ -160,8 +170,9 @@ public class Favourites extends JFrame {
             element.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    //TO DO
-                    //show BookView
+                    BookView bookView = new BookView(logic);
+                    bookView.setBook(book);
+                    bookView.setVisible(true);
                 }
             });
             pnBooks.add(element);

@@ -3,6 +3,16 @@ package Model;
 import javax.swing.*;
 
 public class Book {
+    private int book_template_id;
+
+    public int getBook_template_id() {
+        return book_template_id;
+    }
+
+    public void setBook_template_id(int book_template_id) {
+        this.book_template_id = book_template_id;
+    }
+
     private int bookId;
     private String title;
     private String author;
@@ -13,7 +23,24 @@ public class Book {
     private boolean isReserved;
     private ImageIcon imageIcon;
     private String imagePath;
+    private String startDate;
+    private String finishDate;
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getFinishDate() {
+        return finishDate;
+    }
+
+    public void setFinishDate(String finishDate) {
+        this.finishDate = finishDate;
+    }
 
     public Book(int bookId, String title, String author, String description, String genre, boolean isFavourite, boolean isRented, boolean isReserved, ImageIcon imageIcon, String imagePath) {
         this.bookId = bookId;
@@ -111,19 +138,33 @@ public class Book {
     public void setImageIcon(ImageIcon imageIcon) {
         this.imageIcon = imageIcon;
     }
-    public ImageIcon getImageCon(){return imageIcon;}
 
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
+    public ImageIcon getImageCon() {
+        return imageIcon;
     }
 
     public String getImagePath() {
         return imagePath;
     }
 
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     //TO DO: methods to get dates
-    public String getRentedDate(){return "";}
+    public String getRentedDate() {
+        return "";
+    }
 
-    public String getDeadlineDate(){return "";}
+    public String getDeadlineDate() {
+        return "";
+    }
 
+    public void setBookID(int i) {
+        this.bookId = i;
+    }
+
+    public void setBookName(String the_lord_of_the_rings) {
+        this.title = the_lord_of_the_rings;
+    }
 }

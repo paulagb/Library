@@ -2,6 +2,7 @@ package ui;
 
 import Controllers.MainPageCustomerController;
 import Model.Book;
+import service.Library;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -22,7 +23,13 @@ public class MainCustomer extends JFrame {
     private JButton btProfile;
     private JButton btFavorites;
     private JPanel pnBooks;
+    private BookView bookView;
 
+    private Library logic;
+
+    public void setLibrary(Library logic) {
+        this.logic = logic;
+    }
     /**
      * Create the frame.
      */
@@ -154,7 +161,10 @@ public class MainCustomer extends JFrame {
             element.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    //show BookView
+                    bookView = new BookView(logic);
+                    bookView.setControllers(logic.getBookController());
+                    bookView.setBook(book);
+                    bookView.setVisible(true);
                 }
             });
             pnBooks.add(element);

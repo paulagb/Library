@@ -1,5 +1,6 @@
 package service;
 
+import Controllers.BookController;
 import Controllers.MasterController;
 import Database.DAO.BookDAO;
 import Database.DAO.SearchDAO;
@@ -32,6 +33,9 @@ public class Library {
             case "register":
                 masterController.register();
                 break;
+            case "profile":
+                masterController.profile("main", user);
+                break;
             case "mainPage":
                 if (user.getUserType().equals("user")) {
                     masterController.okLoginCustomer(user);
@@ -39,6 +43,9 @@ public class Library {
                     masterController.okLoginAdmin(user);
 
                 }
+                break;
+            case "mainFromFav":
+                masterController.mainFromFav();
                 break;
             case "login":
                 masterController.login();
@@ -106,7 +113,7 @@ public class Library {
 
     //TODO
     public boolean rentBook(Book book) {
-        return bookDAO.rentBook(book);
+        return bookDAO.rentBook(book, user.getUserID());
     }
 
     public ArrayList<Book> search(String search) {
@@ -120,6 +127,18 @@ public class Library {
 
     public void showBook(Book book) {
         masterController.showBook(book);
+    }
+
+    public BookController getBookController() {
+        return masterController.getBookController();
+    }
+
+    public void unFavBook(Book book) {
+        bookDAO.removeFavBook(book, user);
+    }
+
+    public void favBook(Book book) {
+        bookDAO.addFavBook(book, user);
     }
 }
 

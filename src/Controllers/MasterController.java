@@ -25,6 +25,15 @@ public class MasterController {
         this.bookController = bookView;
     }
 
+    public MasterController(LoginController loginController, CreateProfileController createProfileController, MainPageCustomerController mainPageCustomerController, FavouriteController favouriteController, RentedBooksController rentedBooksController, AdminController mainAdminController) {
+        this.loginController = loginController;
+        this.createProfileController = createProfileController;
+        this.mainPageCustomerController = mainPageCustomerController;
+        this.rentedBooksController = rentedBooksController;
+        this.favouriteController = favouriteController;
+        this.adminController = mainAdminController;
+    }
+
     public void okLoginCustomer(User user) {
         System.out.println("OKALOGIN");
         loginController.displayView(false);
@@ -53,6 +62,11 @@ public class MasterController {
         //TODO REFRESH MAIN PAGE, WITH BOOKS
         if (from.equals("fav")) {
             favouriteController.displayView(false);
+            rentedBooksController.setRentedBooks(user);
+            rentedBooksController.displayView(true);
+        }
+        if (from.equals("main")) {
+            mainPageCustomerController.displayView(false);
             rentedBooksController.setRentedBooks(user);
             rentedBooksController.displayView(true);
         }
@@ -112,5 +126,14 @@ public class MasterController {
 
     public void showBook(Book book) {
               bookController.showBook(book);
+    }
+
+    public void mainFromFav() {
+        favouriteController.displayView(false);
+        mainPageCustomerController.displayView(true);
+    }
+
+    public BookController getBookController() {
+        return bookController;
     }
 }

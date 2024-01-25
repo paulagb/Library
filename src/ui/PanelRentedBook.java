@@ -3,56 +3,43 @@ package ui;
 import Model.Book;
 
 import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JSeparator;
-import javax.swing.JButton;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import javax.swing.border.LineBorder;
 
 public class PanelRentedBook extends JPanel {
 
-    Book book;
-
     JButton btReturned;
-
     /**
      * Create the panel.
      */
     public PanelRentedBook(Book book) {
-        setLayout(null);
-        this.book = book;
+        setBorder(new LineBorder(new Color(218, 165, 32), 2));
+        setBackground(new Color(255, 255, 255));
+        setLayout(new GridLayout(3, 0, 0, 0));
 
         JLabel lblTitle = new JLabel(book.getTitle() + "-" + book.getAuthor());
         lblTitle.setFont(new Font("Leelawadee UI Semilight", Font.BOLD, 14));
-        lblTitle.setBounds(26, 10, 380, 21);
         add(lblTitle);
 
-        JSeparator separator = new JSeparator();
-        separator.setForeground(new Color(184, 134, 11));
-        separator.setBounds(25, 33, 393, 2);
-        add(separator);
+        JPanel pnDates = new JPanel();
+        pnDates.setBackground(new Color(255, 255, 255));
+        add(pnDates);
+        pnDates.setLayout(new GridLayout(2, 0, 0, 0));
 
-        JLabel lblWhenRented = new JLabel("When rented:");
+        JLabel lblWhenRented = new JLabel("When rented:" + "\t" + book.getRentedDate());
         lblWhenRented.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 14));
-        lblWhenRented.setBounds(26, 51, 90, 13);
-        add(lblWhenRented);
+        pnDates.add(lblWhenRented);
 
-        JLabel lblDeadline = new JLabel("Deadline:");
+        JLabel lblDeadline= new JLabel("Deadline:" + "\t" + book.getDeadlineDate());
         lblDeadline.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 14));
-        lblDeadline.setBounds(26, 74, 66, 13);
-        add(lblDeadline);
-
-        JLabel lblRentedDate = new JLabel(book.getRentedDate());
-        lblRentedDate.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 14));
-        lblRentedDate.setBounds(340, 51, 66, 13);
-        add(lblRentedDate);
-
-        JLabel lblDeadlineDate = new JLabel(book.getDeadlineDate());
-        lblDeadlineDate.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 14));
-        lblDeadlineDate.setBounds(340, 74, 66, 13);
-        add(lblDeadlineDate);
+        pnDates.add(lblDeadline);
 
         btReturned = new JButton("Mark as returned");
         btReturned.addActionListener(new ActionListener() {
@@ -64,7 +51,6 @@ public class PanelRentedBook extends JPanel {
         btReturned.setForeground(new Color(255, 255, 255));
         btReturned.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 13));
         btReturned.setBackground(new Color(216, 191, 216));
-        btReturned.setBounds(117, 127, 185, 21);
         add(btReturned);
 
     }
@@ -72,4 +58,6 @@ public class PanelRentedBook extends JPanel {
     public JButton getBtReturned() {
         return btReturned;
     }
+
+
 }

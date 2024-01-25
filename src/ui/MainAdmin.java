@@ -1,13 +1,12 @@
 package ui;
 
 import Model.Book;
+import service.Library;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class MainAdmin extends JFrame {
@@ -20,6 +19,11 @@ public class MainAdmin extends JFrame {
     private JPanel pnBooks;
 
     private ArrayList<Book> books;
+    private Library logic;
+
+    private void setLibrery(Library logic) {
+        this.logic = logic;
+    }
 
     /**
      * Create the frame.
@@ -141,8 +145,16 @@ public class MainAdmin extends JFrame {
         this.books = books;
         for (Book book : books) {
             PanelBook element;
-
             element = new PanelBook(book);
+            element.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    BookView bookView = new BookView(logic);
+                    bookView.setControllers(logic.getBookController());
+                    bookView.setBook(book);
+                    bookView.setVisible(true);
+                }
+            });
             pnBooks.add(element);
 
 

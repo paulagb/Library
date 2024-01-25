@@ -2,6 +2,7 @@ package ui;
 
 import Controllers.BookController;
 import Model.Book;
+import service.Library;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -16,12 +17,14 @@ public class BookView extends JFrame {
     private JButton btFavourites;
     private JButton btClose;
 
+    private Library logic;
+
 
     /**
      * Create the frame.
      */
-    public BookView() {
-
+    public BookView(Library logic) {
+        this.logic = logic;
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 493, 433);
         contentPane = new JPanel();
@@ -33,6 +36,7 @@ public class BookView extends JFrame {
     }
 
     public void setBook(Book book) {
+        this.book = book;
         setUndecorated(true);
 
         setContentPane(contentPane);
@@ -82,7 +86,11 @@ public class BookView extends JFrame {
         contentPane.add(taDescription);
 
 
-        btReserved.setActionCommand("btReserved");
+        btReserved.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                logic.changeView("reserved");
+            }
+        });
         if (this.book.isRented()) {
             btReserved.setEnabled(false);
         }
@@ -99,7 +107,11 @@ public class BookView extends JFrame {
         btReserved.setBounds(63, 339, 298, 21);
         contentPane.add(btReserved);
 
-        btFavourites.setActionCommand("favBook");
+        btFavourites.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                changeFavourite(book);
+            }
+        });
         btFavourites.setFont(new Font("Leelawadee UI Semilight", Font.PLAIN, 11));
         if (this.book.isFavourite()) {
             btFavourites.setIcon(new ImageIcon(BookView.class.getResource("/img/heart-red.png")));
@@ -147,14 +159,12 @@ public class BookView extends JFrame {
     public void changeFavourite(Book book) {
         if (book.isFavourite()) {
             book.setFavourite(false);
-            //TO DO
-            //save info into database
+            logic.unFavBook(book);
             btFavourites.setIcon(new ImageIcon(BookView.class.getResource("/img/heart-empty.png")));
             btFavourites.setText("Add to favourites");
         } else {
             book.setFavourite(true);
-            //TO DO
-            //save info into database
+            logic.favBook(book);
             btFavourites.setIcon(new ImageIcon(BookView.class.getResource("/img/heart-red.png")));
             btFavourites.setText("Remove from favourites");
         }
@@ -168,5 +178,9 @@ public class BookView extends JFrame {
 
     public void displayView(boolean b) {
         this.setVisible(b);
+    }
+
+    public Book getBook() {
+        return this.book;
     }
 }

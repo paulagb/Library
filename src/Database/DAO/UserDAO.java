@@ -50,12 +50,12 @@ public class UserDAO {
     }
 
     public User checkCredentials(String username, String password) {
-        String sql = "SELECT name, surname, email, user_type, password FROM User WHERE email = '" + username + "' AND password = '" + password + "'";
+        String sql = "SELECT * FROM User WHERE email = '" + username + "' AND password = '" + password + "'";
         ResultSet rs = conn.selectQuery(sql);
         try {
             if (rs.next()) {
                 User user = new User();
-                //user.setUserId(rs.getInt("user_ID"));
+                user.setUserId(rs.getInt("user_ID"));
                 user.setName(rs.getString("name"));
                 user.setSurname(rs.getString("surname"));
                 user.setUserType(rs.getString("user_type"));

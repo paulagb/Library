@@ -7,9 +7,11 @@ import ui.Favourites;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
-public class FavouriteController implements ActionListener {
+public class FavouriteController implements ActionListener, MouseListener {
     private Favourites favView;
     private Library logic;
 
@@ -43,10 +45,36 @@ public class FavouriteController implements ActionListener {
             }
             case "btFavourites" -> logic.changeView("favourites");
         }
-
     }
 
     public void displayView(boolean visible) {
         favView.setVisible(visible);
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println("click");
+        logic.changeView("mainFromFav");
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

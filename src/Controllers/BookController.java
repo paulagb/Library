@@ -29,6 +29,10 @@ public class BookController implements ActionListener {
             case "btFavourites" -> {
                 logic.changeView("favourites");
             }
+            case "favBook" -> {
+                logic.unFavBook(bookView.getBook());
+                bookView.changeFavourite(bookView.getBook());
+            }
         }
     }
 

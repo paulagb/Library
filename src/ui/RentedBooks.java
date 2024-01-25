@@ -141,12 +141,6 @@ public class RentedBooks extends JFrame {
         pnBooks.setBackground(new Color(255, 255, 255));
         spBooks.setViewportView(pnBooks);
 
-        //TO DO
-        //METHOD TO ACCESS TO RENTED BOOKS
-        /*
-
-
-         */
     }
 
     public void setControllers(RentedBooksController rentedBooksController) {
@@ -161,14 +155,18 @@ public class RentedBooks extends JFrame {
 
     public void setRentedBooks(ArrayList<Book> books) {
         rentedBooks = books;
+        pnBooks.removeAll();
         System.out.println("Rented books: " + rentedBooks.size());
         for (Book book : books) {
             System.out.println(book.getTitle());
             PanelRentedBook element = new PanelRentedBook(book);
             element.getBtReturned().setVisible(false);
             element.getBtReturned().setEnabled(false);
+
             pnBooks.add(element);
         }
+        pnBooks.revalidate();
+        pnBooks.repaint();
     }
 
 }
